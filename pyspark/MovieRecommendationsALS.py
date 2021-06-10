@@ -20,7 +20,7 @@ def parseInput(line):
 
 if __name__ == "__main__":
     # Create a SparkSession
-    spark = SparkSession.builder.appName("MovieRecs").getOrCreate()
+    spark = SparkSession.builder.appName("MovieRecs").config("spark.sql.crossJoin.enabled","true").getOrCreate()
 
     # Load up our movie ID -> name dictionary
     movieNames = loadMovieNames()
