@@ -1,7 +1,7 @@
 from pyspark.sql import SparkSession
-from pyspark.ml.recommendation import ALS
+from pyspark.ml.recommendation import ALS # An iterative method to compute matrix factorization
 from pyspark.sql import Row
-from pyspark.sql.functions import lit
+from pyspark.sql.functions import lit # Allows us to put constant values in rows.
 
 # Load up movie ID -> movie name dictionary
 def loadMovieNames():
@@ -19,7 +19,7 @@ def parseInput(line):
 
 
 if __name__ == "__main__":
-    # Create a SparkSession (the config bit is only for Windows!)
+    # Create a SparkSession
     spark = SparkSession.builder.appName("MovieRecs").getOrCreate()
 
     # Load up our movie ID -> name dictionary
@@ -32,6 +32,7 @@ if __name__ == "__main__":
     ratingsRDD = lines.map(parseInput)
 
     # Convert to a DataFrame and cache it
+    # calling cache() on it will make spark to avoid creating ratings dataframe more than ones.
     ratings = spark.createDataFrame(ratingsRDD).cache()
 
     # Create an ALS collaborative filtering model from the complete data set
@@ -44,10 +45,11 @@ if __name__ == "__main__":
     for rating in userRatings.collect():
         print movieNames[rating['movieID']], rating['rating']
 
-    print("\nTop 20 recommendations:")
+    print("\nTop 20 recommendations for user 0:")
     # Find movies rated more than 100 times
     ratingCounts = ratings.groupBy("movieID").count().filter("count > 100")
     # Construct a "test" dataframe for user 0 with every movie rated more than 100 times
+    # In other words we go through all movies that has more than 100 ratings, and predict how would user 0 rate it.
     popularMovies = ratingCounts.select("movieID").withColumn('userID', lit(0))
 
     # Run our model on that list of popular movies for user ID 0
