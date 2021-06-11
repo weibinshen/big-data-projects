@@ -40,8 +40,11 @@ if __name__ == "__main__":
     # Join the two together (We now have movieID, avg(rating), and count columns)
     averagesAndCounts = counts.join(averageRatings, "movieID")
 
+    # Filter movies rated 10 or fewer times
+    popularAveragesAndCounts = averagesAndCounts.filter("count > 10")
+
     # Pull the top 10 results
-    topTen = averagesAndCounts.orderBy("avg(rating)").take(10)
+    topTen = popularAveragesAndCounts.orderBy("avg(rating)").take(10)
 
     # Print them out, converting movie ID's to names as we go.
     for movie in topTen:
