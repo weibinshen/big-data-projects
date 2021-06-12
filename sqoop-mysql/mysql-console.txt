@@ -1,0 +1,1720 @@
+mysql> show tables
+    -> ;
++---------------------+
+| Tables_in_movielens |
++---------------------+
+| genres              |
+| genres_movies       |
+| movies              |
+| occupations         |
+| ratings             |
+| users               |
++---------------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from movies limit 10;
++----+------------------------------------------------------+--------------+
+| id | title                                                | release_date |
++----+------------------------------------------------------+--------------+
+|  1 | Toy Story (1995)                                     | 1995-01-01   |
+|  2 | GoldenEye (1995)                                     | 1995-01-01   |
+|  3 | Four Rooms (1995)                                    | 1995-01-01   |
+|  4 | Get Shorty (1995)                                    | 1995-01-01   |
+|  5 | Copycat (1995)                                       | 1995-01-01   |
+|  6 | Shanghai Triad (Yao a yao yao dao waipo qiao) (1995) | 1995-01-01   |
+|  7 | Twelve Monkeys (1995)                                | 1995-01-01   |
+|  8 | Babe (1995)                                          | 1995-01-01   |
+|  9 | Dead Man Walking (1995)                              | 1995-01-01   |
+| 10 | Richard III (1995)                                   | 1996-01-22   |
++----+------------------------------------------------------+--------------+
+10 rows in set (0.00 sec)
+
+mysql> describe ratings;
++----------+-----------+------+-----+-------------------+-----------------------------+
+| Field    | Type      | Null | Key | Default           | Extra                       |
++----------+-----------+------+-----+-------------------+-----------------------------+
+| id       | int(11)   | NO   | PRI | NULL              |                             |
+| user_id  | int(11)   | YES  |     | NULL              |                             |
+| movie_id | int(11)   | YES  |     | NULL              |                             |
+| rating   | int(11)   | YES  |     | NULL              |                             |
+| rated_at | timestamp | NO   |     | CURRENT_TIMESTAMP | on update CURRENT_TIMESTAMP |
++----------+-----------+------+-----+-------------------+-----------------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT movies.title, COUNT(ratings.movie_id) AS ratingCount
+    -> FROM movies
+    -> INNER JOIN ratings
+    -> ON movies.id = ratings.movie_id
+    -> GROUP BY movies.title
+    -> ORDER BY ratingCount;
++-----------------------------------------------------------------------------------+-------------+
+| title                                                                             | ratingCount |
++-----------------------------------------------------------------------------------+-------------+
+| Daens (1992)                                                                      |           1 |
+| Death in the Garden (Mort en ce jardin, La) (1956)                                |           1 |
+| Wife, The (1995)                                                                  |           1 |
+| You So Crazy (1994)                                                               |           1 |
+| I, Worst of All (Yo, la peor de todas) (1990)                                     |           1 |
+| Three Lives and Only One Death (1996)                                             |           1 |
+| Damsel in Distress, A (1937)                                                      |           1 |
+| Big One, The (1997)                                                               |           1 |
+| Shopping (1994)                                                                   |           1 |
+| Wings of Courage (1995)                                                           |           1 |
+| Jupiter's Wife (1994)                                                             |           1 |
+| Ripe (1996)                                                                       |           1 |
+| Great Day in Harlem, A (1994)                                                     |           1 |
+| Window to Paris (1994)                                                            |           1 |
+| War at Home, The (1996)                                                           |           1 |
+| Normal Life (1996)                                                                |           1 |
+| Leopard Son, The (1996)                                                           |           1 |
+| Mad Dog Time (1996)                                                               |           1 |
+| Witness (1985)                                                                    |           1 |
+| Police Story 4: Project S (Chao ji ji hua) (1993)                                 |           1 |
+| Butterfly Kiss (1995)                                                             |           1 |
+| Nothing Personal (1995)                                                           |           1 |
+| JLG/JLG - autoportrait de d?cembre (1994)                                         |           1 |
+| Next Step, The (1995)                                                             |           1 |
+| Mille bolle blu (1993)                                                            |           1 |
+| Terror in a Texas Town (1958)                                                     |           1 |
+| Death in Brunswick (1991)                                                         |           1 |
+| The Courtyard (1995)                                                              |           1 |
+| Yankee Zulu (1994)                                                                |           1 |
+| Two Friends (1986)                                                                |           1 |
+| Sunchaser, The (1996)                                                             |           1 |
+| Paris Was a Woman (1995)                                                          |           1 |
+| Nemesis 2: Nebula (1995)                                                          |           1 |
+| Aiqing wansui (1994)                                                              |           1 |
+| All Things Fair (1996)                                                            |           1 |
+| Farmer & Chase (1995)                                                             |           1 |
+| Every Other Weekend (1990)                                                        |           1 |
+| Favor, The (1994)                                                                 |           1 |
+| Wedding Bell Blues (1996)                                                         |           1 |
+| Sleepover (1995)                                                                  |           1 |
+| Baton Rouge (1988)                                                                |           1 |
+| T-Men (1947)                                                                      |           1 |
+| Spanish Prisoner, The (1997)                                                      |           1 |
+| Land and Freedom (Tierra y libertad) (1995)                                       |           1 |
+| Etz Hadomim Tafus (Under the Domin Tree) (1994)                                   |           1 |
+| Niagara, Niagara (1997)                                                           |           1 |
+| To Cross the Rubicon (1991)                                                       |           1 |
+| Stefano Quantestorie (1993)                                                       |           1 |
+| Modern Affair, A (1995)                                                           |           1 |
+| Angel on My Shoulder (1946)                                                       |           1 |
+| Hungarian Fairy Tale, A (1987)                                                    |           1 |
+| Lotto Land (1995)                                                                 |           1 |
+| Office Killer (1997)                                                              |           1 |
+| Coldblooded (1995)                                                                |           1 |
+| Gate of Heavenly Peace, The (1995)                                                |           1 |
+| King of New York (1990)                                                           |           1 |
+| Killer: A Journal of Murder (1995)                                                |           1 |
+| Eye of Vichy, The (Oeil de Vichy, L') (1993)                                      |           1 |
+| He Walked by Night (1948)                                                         |           1 |
+| Nobody Loves Me (Keiner liebt mich) (1994)                                        |           1 |
+| Century (1993)                                                                    |           1 |
+| Love Is All There Is (1996)                                                       |           1 |
+| Girl in the Cadillac (1995)                                                       |           1 |
+| Target (1995)                                                                     |           1 |
+| Hana-bi (1997)                                                                    |           1 |
+| Pharaoh's Army (1995)                                                             |           1 |
+| Bird of Prey (1996)                                                               |           1 |
+| Getting Away With Murder (1996)                                                   |           1 |
+| Fire on the Mountain (1996)                                                       |           1 |
+| Object of My Affection, The (1998)                                                |           1 |
+| Wend Kuuni (God's Gift) (1982)                                                    |           1 |
+| Low Life, The (1994)                                                              |           1 |
+| Fear, The (1995)                                                                  |           1 |
+| Scream of Stone (Schrei aus Stein) (1991)                                         |           1 |
+| Good Morning (1971)                                                               |           1 |
+| Touki Bouki (Journey of the Hyena) (1973)                                         |           1 |
+| Here Comes Cookie (1935)                                                          |           1 |
+| Vie est belle, La (Life is Rosey) (1987)                                          |           1 |
+| Reluctant Debutante, The (1958)                                                   |           1 |
+| Mostro, Il (1994)                                                                 |           1 |
+| Further Gesture, A (1996)                                                         |           1 |
+| Raw Deal (1948)                                                                   |           1 |
+| Mamma Roma (1962)                                                                 |           1 |
+| Big Bang Theory, The (1994)                                                       |           1 |
+| Vermont Is For Lovers (1992)                                                      |           1 |
+| Quartier Mozart (1992)                                                            |           1 |
+| Tigrero: A Film That Was Never Made (1994)                                        |           1 |
+| Promise, The (Versprechen, Das) (1994)                                            |           1 |
+| Brother's Kiss, A (1997)                                                          |           1 |
+| Eighth Day, The (1996)                                                            |           1 |
+| Johns (1996)                                                                      |           1 |
+| Small Faces (1995)                                                                |           1 |
+| Woman in Question, The (1950)                                                     |           1 |
+| Mirage (1995)                                                                     |           1 |
+| Mat' i syn (1997)                                                                 |           1 |
+| August (1996)                                                                     |           1 |
+| Girls Town (1996)                                                                 |           1 |
+| Angela (1995)                                                                     |           1 |
+| Hostile Intentions (1994)                                                         |           1 |
+| Symphonie pastorale, La (1946)                                                    |           1 |
+| Careful (1992)                                                                    |           1 |
+| Tainted (1998)                                                                    |           1 |
+| Silence of the Palace, The (Saimt el Qusur) (1994)                                |           1 |
+| Man from Down Under, The (1943)                                                   |           1 |
+| Very Natural Thing, A (1974)                                                      |           1 |
+| Desert Winds (1995)                                                               |           1 |
+| Other Voices, Other Rooms (1997)                                                  |           1 |
+| Homage (1995)                                                                     |           1 |
+| MURDER and murder (1996)                                                          |           1 |
+| ? k?ldum klaka (Cold Fever) (1994)                                                |           1 |
+| They Made Me a Criminal (1939)                                                    |           1 |
+| Hedd Wyn (1992)                                                                   |           1 |
+| Dadetown (1995)                                                                   |           1 |
+| Power 98 (1995)                                                                   |           1 |
+| Walk in the Sun, A (1945)                                                         |           1 |
+| Crude Oasis, The (1995)                                                           |           1 |
+| Invitation, The (Zaproszenie) (1986)                                              |           1 |
+| I Don't Want to Talk About It (De eso no se habla) (1993)                         |           1 |
+| Entertaining Angels: The Dorothy Day Story (1996)                                 |           1 |
+| Cyclo (1995)                                                                      |           1 |
+| Bloody Child, The (1996)                                                          |           1 |
+| Sweet Nothing (1995)                                                              |           1 |
+| Lashou shentan (1992)                                                             |           1 |
+| Marlene Dietrich: Shadow and Light (1996)                                         |           1 |
+| Shadow of Angels (Schatten der Engel) (1976)                                      |           1 |
+| Someone Else's America (1995)                                                     |           1 |
+| Lady of Burlesque (1943)                                                          |           1 |
+| New Age, The (1994)                                                               |           1 |
+| Tokyo Fist (1995)                                                                 |           1 |
+| B. Monkey (1998)                                                                  |           1 |
+| Shadows (Cienie) (1988)                                                           |           1 |
+| Brothers in Trouble (1995)                                                        |           1 |
+| Liebelei (1933)                                                                   |           1 |
+| Hush (1998)                                                                       |           1 |
+| Sudden Manhattan (1996)                                                           |           2 |
+| Sexual Life of the Belgians, The (1994)                                           |           2 |
+| Crows and Sparrows (1949)                                                         |           2 |
+| Pushing Hands (1992)                                                              |           2 |
+| The Deadly Cure (1996)                                                            |           2 |
+| Delta of Venus (1994)                                                             |           2 |
+| Naked in New York (1994)                                                          |           2 |
+| Little City (1998)                                                                |           2 |
+| American Strays (1996)                                                            |           2 |
+| American Dream (1990)                                                             |           2 |
+| Beans of Egypt, Maine, The (1994)                                                 |           2 |
+| Open Season (1996)                                                                |           2 |
+| Carmen Miranda: Bananas Is My Business (1994)                                     |           2 |
+| Rough Magic (1995)                                                                |           2 |
+| Intimate Relations (1996)                                                         |           2 |
+| Men With Guns (1997)                                                              |           2 |
+| Saint of Fort Washington, The (1993)                                              |           2 |
+| Men of Means (1998)                                                               |           2 |
+| Babyfever (1994)                                                                  |           2 |
+| Tough and Deadly (1995)                                                           |           2 |
+| My Life and Times With Antonin Artaud (En compagnie d'Antonin Artaud) (1993)      |           2 |
+| Everest (1998)                                                                    |           2 |
+| Country Life (1994)                                                               |           2 |
+| Beyond Bedlam (1993)                                                              |           2 |
+| Daniel Defoe's Robinson Crusoe (1996)                                             |           2 |
+| Falling in Love Again (1980)                                                      |           2 |
+| Somebody to Love (1994)                                                           |           2 |
+| Spirits of the Dead (Tre passi nel delirio) (1968)                                |           2 |
+| Good Man in Africa, A (1994)                                                      |           2 |
+| Venice/Venice (1992)                                                              |           2 |
+| Some Mother's Son (1996)                                                          |           2 |
+| Glass Shield, The (1994)                                                          |           2 |
+| Celestial Clockwork (1994)                                                        |           2 |
+| Innocent Sleep, The (1995)                                                        |           2 |
+| New York Cop (1996)                                                               |           2 |
+| Safe Passage (1994)                                                               |           2 |
+| New Jersey Drive (1995)                                                           |           2 |
+| Slingshot, The (1993)                                                             |           2 |
+| Boys in Venice (1996)                                                             |           2 |
+| Turning, The (1992)                                                               |           2 |
+| Nico Icon (1995)                                                                  |           2 |
+| Outlaw, The (1943)                                                                |           2 |
+| Butcher Boy, The (1998)                                                           |           2 |
+| Golden Earrings (1947)                                                            |           2 |
+| Scarlet Letter, The (1926)                                                        |           2 |
+| Dream Man (1995)                                                                  |           2 |
+| S.F.W. (1994)                                                                     |           2 |
+| Kika (1993)                                                                       |           2 |
+| Destiny Turns on the Radio (1995)                                                 |           2 |
+| Condition Red (1995)                                                              |           2 |
+| Mr. Jones (1993)                                                                  |           2 |
+| Convent, The (Convento, O) (1995)                                                 |           2 |
+| Vermin (1998)                                                                     |           2 |
+| Salut cousin! (1996)                                                              |           2 |
+| Collectionneuse, La (1967)                                                        |           2 |
+| To Have, or Not (1995)                                                            |           2 |
+| Time Tracers (1995)                                                               |           2 |
+| Anna (1996)                                                                       |           2 |
+| Johnny 100 Pesos (1993)                                                           |           2 |
+| Santa with Muscles (1996)                                                         |           2 |
+| Machine, The (1994)                                                               |           2 |
+| Visitors, The (Visiteurs, Les) (1993)                                             |           2 |
+| Love and Death on Long Island (1997)                                              |           2 |
+| Line King: Al Hirschfeld, The (1996)                                              |           2 |
+| Show, The (1995)                                                                  |           2 |
+| Foreign Student (1994)                                                            |           2 |
+| Day the Sun Turned Cold, The (Tianguo niezi) (1994)                               |           2 |
+| Nightwatch (1997)                                                                 |           3 |
+| Bewegte Mann, Der (1994)                                                          |           3 |
+| Gilligan's Island: The Movie (1998)                                               |           3 |
+| Star Kid (1997)                                                                   |           3 |
+| Wooden Man's Bride, The (Wu Kui) (1994)                                           |           3 |
+| Ed's Next Move (1996)                                                             |           3 |
+| Prefontaine (1997)                                                                |           3 |
+| Fall (1997)                                                                       |           3 |
+| All Over Me (1997)                                                                |           3 |
+| Temptress Moon (Feng Yue) (1996)                                                  |           3 |
+| Nelly & Monsieur Arnaud (1995)                                                    |           3 |
+| B*A*P*S (1997)                                                                    |           3 |
+| Catwalk (1995)                                                                    |           3 |
+| Mondo (1996)                                                                      |           3 |
+| C?r?monie, La (1995)                                                              |           3 |
+| Shooter, The (1995)                                                               |           3 |
+| Lover's Knot (1996)                                                               |           3 |
+| Jerky Boys, The (1994)                                                            |           3 |
+| Truth or Consequences, N.M. (1997)                                                |           3 |
+| It Takes Two (1995)                                                               |           3 |
+| Inkwell, The (1994)                                                               |           3 |
+| Paris, France (1993)                                                              |           3 |
+| Wedding Gift, The (1994)                                                          |           3 |
+| Hunted, The (1995)                                                                |           3 |
+| Simple Wish, A (1997)                                                             |           3 |
+| Bitter Sugar (Azucar Amargo) (1996)                                               |           3 |
+| Captives (1994)                                                                   |           3 |
+| Squeeze (1996)                                                                    |           3 |
+| My Favorite Season (1993)                                                         |           3 |
+| Commandments (1997)                                                               |           3 |
+| Sprung (1997)                                                                     |           3 |
+| Stars Fell on Henrietta, The (1995)                                               |           3 |
+| Amityville: Dollhouse (1996)                                                      |           3 |
+| Frisk (1995)                                                                      |           3 |
+| Letter From Death Row, A (1998)                                                   |           3 |
+| Rendezvous in Paris (Rendez-vous de Paris, Les) (1995)                            |           3 |
+| For the Moment (1994)                                                             |           3 |
+| Savage Nights (Nuits fauves, Les) (1992)                                          |           3 |
+| I Can't Sleep (J'ai pas sommeil) (1994)                                           |           3 |
+| I Like It Like That (1994)                                                        |           3 |
+| Gordy (1995)                                                                      |           3 |
+| Last Time I Saw Paris, The (1954)                                                 |           3 |
+| Ill Gotten Gains (1997)                                                           |           3 |
+| Price Above Rubies, A (1998)                                                      |           3 |
+| Mighty, The (1998)                                                                |           3 |
+| Quiet Room, The (1996)                                                            |           3 |
+| Stranger, The (1994)                                                              |           3 |
+| For Ever Mozart (1996)                                                            |           3 |
+| Nosferatu a Venezia (1986)                                                        |           3 |
+| Relative Fear (1994)                                                              |           3 |
+| Fausto (1993)                                                                     |           3 |
+| Joy Luck Club, The (1993)                                                         |           3 |
+| Last Summer in the Hamptons (1995)                                                |           3 |
+| Search for One-eye Jimmy, The (1996)                                              |           3 |
+| Babysitter, The (1995)                                                            |           3 |
+| Calendar Girl (1993)                                                              |           3 |
+| Boys, Les (1997)                                                                  |           3 |
+| Nowhere (1997)                                                                    |           3 |
+| Walking Dead, The (1995)                                                          |           4 |
+| Twilight (1998)                                                                   |           4 |
+| Last Klezmer: Leopold Kozlowski, His Life and Music, The (1995)                   |           4 |
+| Schizopolis (1996)                                                                |           4 |
+| Mr. Wonderful (1993)                                                              |           4 |
+| So Dear to My Heart (1949)                                                        |           4 |
+| Ballad of Narayama, The (Narayama Bushiko) (1958)                                 |           4 |
+| The Innocent (1994)                                                               |           4 |
+| Harlem (1993)                                                                     |           4 |
+| Killer (Bulletproof Heart) (1994)                                                 |           4 |
+| 8 Seconds (1994)                                                                  |           4 |
+| Maya Lin: A Strong Clear Vision (1994)                                            |           4 |
+| Suture (1993)                                                                     |           4 |
+| An Unforgettable Summer (1994)                                                    |           4 |
+| Faces (1968)                                                                      |           4 |
+| Love Serenade (1996)                                                              |           4 |
+| Neon Bible, The (1995)                                                            |           4 |
+| Pie in the Sky (1995)                                                             |           4 |
+| Two Deaths (1995)                                                                 |           4 |
+| In the Line of Duty 2 (1987)                                                      |           4 |
+| Substance of Fire, The (1996)                                                     |           4 |
+| Clean Slate (Coup de Torchon) (1981)                                              |           4 |
+| Fille seule, La (A Single Girl) (1995)                                            |           4 |
+| Grosse Fatigue (1994)                                                             |           4 |
+| Germinal (1993)                                                                   |           4 |
+| Journey of August King, The (1995)                                                |           4 |
+| Head Above Water (1996)                                                           |           4 |
+| Crossfire (1947)                                                                  |           4 |
+| Forbidden Christ, The (Cristo proibito, Il) (1950)                                |           4 |
+| Hotel de Love (1996)                                                              |           4 |
+| Newton Boys, The (1998)                                                           |           4 |
+| Across the Sea of Time (1995)                                                     |           4 |
+| Caro Diario (Dear Diary) (1994)                                                   |           4 |
+| Angel Baby (1995)                                                                 |           4 |
+| Perfect Candidate, A (1996)                                                       |           4 |
+| Grateful Dead (1995)                                                              |           4 |
+| Innocents, The (1961)                                                             |           4 |
+| Loch Ness (1995)                                                                  |           4 |
+| Underworld (1997)                                                                 |           4 |
+| Frankie Starlight (1995)                                                          |           4 |
+| Ciao, Professore! (1993)                                                          |           4 |
+| Ladybird Ladybird (1994)                                                          |           4 |
+| Underneath, The (1995)                                                            |           4 |
+| Colonel Chabert, Le (1994)                                                        |           4 |
+| Lamerica (1994)                                                                   |           4 |
+| C'est arriv? pr?s de chez vous (1992)                                             |           4 |
+| Cosi (1996)                                                                       |           4 |
+| Enfer, L' (1994)                                                                  |           4 |
+| Bonheur, Le (1965)                                                                |           4 |
+| Amityville Curse, The (1990)                                                      |           4 |
+| Guantanamera (1994)                                                               |           4 |
+| Nil By Mouth (1997)                                                               |           4 |
+| Run of the Country, The (1995)                                                    |           4 |
+| Total Eclipse (1995)                                                              |           4 |
+| Castle Freak (1995)                                                               |           4 |
+| Buddy (1997)                                                                      |           4 |
+| Two or Three Things I Know About Her (1966)                                       |           4 |
+| Leading Man, The (1996)                                                           |           4 |
+| 8 Heads in a Duffel Bag (1997)                                                    |           4 |
+| Lay of the Land, The (1997)                                                       |           4 |
+| King of the Hill (1993)                                                           |           4 |
+| Big Squeeze, The (1996)                                                           |           4 |
+| Being Human (1993)                                                                |           4 |
+| Prisoner of the Mountains (Kavkazsky Plennik) (1996)                              |           5 |
+| Underground (1995)                                                                |           5 |
+| Feast of July (1995)                                                              |           5 |
+| Late Bloomers (1996)                                                              |           5 |
+| Flirt (1995)                                                                      |           5 |
+| Drunks (1995)                                                                     |           5 |
+| Panther (1995)                                                                    |           5 |
+| Hearts and Minds (1996)                                                           |           5 |
+| Heavy (1995)                                                                      |           5 |
+| Roseanna's Grave (For Roseanna) (1997)                                            |           5 |
+| Dingo (1992)                                                                      |           5 |
+| 3 Ninjas: High Noon At Mega Mountain (1998)                                       |           5 |
+| Best Men (1997)                                                                   |           5 |
+| Carpool (1996)                                                                    |           5 |
+| Romper Stomper (1992)                                                             |           5 |
+| Story of Xinghua, The (1993)                                                      |           5 |
+| Midnight Dancers (Sibak) (1994)                                                   |           5 |
+| Stripes (1981)                                                                    |           5 |
+| Phat Beach (1996)                                                                 |           5 |
+| Rhyme & Reason (1997)                                                             |           5 |
+| Locusts, The (1997)                                                               |           5 |
+| Loaded (1994)                                                                     |           5 |
+| Children of the Revolution (1996)                                                 |           5 |
+| Race the Sun (1996)                                                               |           5 |
+| Scarlet Letter, The (1995)                                                        |           5 |
+| Sliding Doors (1998)                                                              |           5 |
+| No Escape (1994)                                                                  |           5 |
+| Of Human Bondage (1934)                                                           |           5 |
+| Amityville 1992: It's About Time (1992)                                           |           5 |
+| Amityville: A New Generation (1993)                                               |           5 |
+| Old Lady Who Walked in the Sea, The (Vieille qui marchait dans la mer, La) (1991) |           5 |
+| 1-900 (1994)                                                                      |           5 |
+| Even Cowgirls Get the Blues (1993)                                                |           5 |
+| Chasers (1994)                                                                    |           5 |
+| Faust (1994)                                                                      |           5 |
+| Talking About Sex (1994)                                                          |           5 |
+| Turbo: A Power Rangers Movie (1997)                                               |           5 |
+| Boys Life (1995)                                                                  |           5 |
+| Secret Adventures of Tom Thumb, The (1993)                                        |           5 |
+| Theodore Rex (1995)                                                               |           5 |
+| Jefferson in Paris (1995)                                                         |           5 |
+| Getting Even with Dad (1994)                                                      |           5 |
+| Gumby: The Movie (1995)                                                           |           5 |
+| Legal Deceit (1997)                                                               |           5 |
+| Stonewall (1995)                                                                  |           5 |
+| Magic Hour, The (1998)                                                            |           5 |
+| Blood For Dracula (Andy Warhol's Dracula) (1974)                                  |           5 |
+| Brother Minister: The Assassination of Malcolm X (1994)                           |           5 |
+| When Night Is Falling (1995)                                                      |           5 |
+| Two Bits (1995)                                                                   |           5 |
+| Above the Rim (1994)                                                              |           5 |
+| Flower of My Secret, The (Flor de mi secreto, La) (1995)                          |           6 |
+| Bad Girls (1994)                                                                  |           6 |
+| Albino Alligator (1996)                                                           |           6 |
+| Boys (1996)                                                                       |           6 |
+| Mina Tannenbaum (1994)                                                            |           6 |
+| Amityville 3-D (1983)                                                             |           6 |
+| Bent (1997)                                                                       |           6 |
+| Hollow Reed (1996)                                                                |           6 |
+| Twin Town (1997)                                                                  |           6 |
+| Margaret's Museum (1995)                                                          |           6 |
+| Cure, The (1995)                                                                  |           6 |
+| Bad Moon (1996)                                                                   |           6 |
+| Duoluo tianshi (1995)                                                             |           6 |
+| Tetsuo II: Body Hammer (1992)                                                     |           6 |
+| Infinity (1996)                                                                   |           6 |
+| Flesh and Bone (1993)                                                             |           6 |
+| Whole Wide World, The (1996)                                                      |           6 |
+| Kissed (1996)                                                                     |           6 |
+| Gabbeh (1996)                                                                     |           6 |
+| Nina Takes a Lover (1994)                                                         |           6 |
+| Best of the Best 3: No Turning Back (1995)                                        |           6 |
+| Secret Agent, The (1996)                                                          |           6 |
+| Of Love and Shadows (1994)                                                        |           6 |
+| World of Apu, The (Apur Sansar) (1959)                                            |           6 |
+| Van, The (1996)                                                                   |           6 |
+| Ed (1996)                                                                         |           6 |
+| Land Before Time III: The Time of the Great Giving (1995) (V)                     |           6 |
+| City of Industry (1997)                                                           |           6 |
+| Blood Beach (1981)                                                                |           6 |
+| Twisted (1996)                                                                    |           6 |
+| Metisse (Caf? au Lait) (1993)                                                     |           6 |
+| Guilty as Sin (1993)                                                              |           6 |
+| N?nette et Boni (1996)                                                            |           6 |
+| Angel and the Badman (1947)                                                       |           6 |
+| Promesse, La (1996)                                                               |           6 |
+| Second Jungle Book: Mowgli & Baloo, The (1997)                                    |           6 |
+| Boy's Life 2 (1997)                                                               |           6 |
+| Zeus and Roxanne (1997)                                                           |           6 |
+| Paradise Road (1997)                                                              |           7 |
+| Steal Big, Steal Little (1995)                                                    |           7 |
+| Bliss (1997)                                                                      |           7 |
+| Hugo Pool (1997)                                                                  |           7 |
+| Love and Other Catastrophes (1996)                                                |           7 |
+| Beat the Devil (1954)                                                             |           7 |
+| Trial by Jury (1994)                                                              |           7 |
+| Senseless (1998)                                                                  |           7 |
+| Tie That Binds, The (1995)                                                        |           7 |
+| Original Gangstas (1996)                                                          |           7 |
+| Night Flier (1997)                                                                |           7 |
+| Faster Pussycat! Kill! Kill! (1965)                                               |           7 |
+| Far From Home: The Adventures of Yellow Dog (1995)                                |           7 |
+| Pompatus of Love, The (1996)                                                      |           7 |
+| Swan Princess, The (1994)                                                         |           7 |
+| Double Happiness (1994)                                                           |           7 |
+| Ayn Rand: A Sense of Life (1997)                                                  |           7 |
+| Denise Calls Up (1995)                                                            |           7 |
+| Last Time I Committed Suicide, The (1997)                                         |           7 |
+| Life with Mikey (1993)                                                            |           7 |
+| Kicked in the Head (1997)                                                         |           7 |
+| Two Much (1996)                                                                   |           7 |
+| Designated Mourner, The (1997)                                                    |           7 |
+| Purple Noon (1960)                                                                |           7 |
+| Nothing to Lose (1994)                                                            |           7 |
+| Kim (1950)                                                                        |           7 |
+| Year of the Horse (1997)                                                          |           7 |
+| Jack and Sarah (1995)                                                             |           7 |
+| National Lampoon's Senior Trip (1995)                                             |           7 |
+| Dream With the Fishes (1997)                                                      |           7 |
+| North (1994)                                                                      |           7 |
+| Pyromaniac's Love Story, A (1995)                                                 |           7 |
+| Man of No Importance, A (1994)                                                    |           7 |
+| Swept from the Sea (1997)                                                         |           7 |
+| Madame Butterfly (1995)                                                           |           7 |
+| Lassie (1994)                                                                     |           7 |
+| Aparajito (1956)                                                                  |           7 |
+| Doom Generation, The (1995)                                                       |           7 |
+| Meet Wally Sparks (1997)                                                          |           7 |
+| Dunston Checks In (1996)                                                          |           7 |
+| Moonlight and Valentino (1995)                                                    |           7 |
+| Thieves (Voleurs, Les) (1996)                                                     |           7 |
+| Mercury Rising (1998)                                                             |           7 |
+| Stranger in the House (1997)                                                      |           7 |
+| Bushwhacked (1995)                                                                |           7 |
+| Horse Whisperer, The (1998)                                                       |           7 |
+| Pest, The (1997)                                                                  |           8 |
+| What Happened Was... (1994)                                                       |           8 |
+| Broken English (1996)                                                             |           8 |
+| Caught (1996)                                                                     |           8 |
+| Full Speed (1996)                                                                 |           8 |
+| Dangerous Ground (1997)                                                           |           8 |
+| Jason's Lyric (1994)                                                              |           8 |
+| Nadja (1994)                                                                      |           8 |
+| Walking and Talking (1996)                                                        |           8 |
+| Hear My Song (1991)                                                               |           8 |
+| Curdled (1996)                                                                    |           8 |
+| Reckless (1995)                                                                   |           8 |
+| Female Perversions (1996)                                                         |           8 |
+| Sunset Park (1996)                                                                |           8 |
+| Pather Panchali (1955)                                                            |           8 |
+| Kaspar Hauser (1993)                                                              |           8 |
+| Rent-a-Kid (1995)                                                                 |           8 |
+| Grace of My Heart (1996)                                                          |           8 |
+| Jimmy Hollywood (1994)                                                            |           8 |
+| Love and a .45 (1994)                                                             |           8 |
+| A Chef in Love (1996)                                                             |           8 |
+| Awfully Big Adventure, An (1995)                                                  |           8 |
+| Street Fighter (1994)                                                             |           8 |
+| Losing Chase (1996)                                                               |           8 |
+| Maybe, Maybe Not (Bewegte Mann, Der) (1994)                                       |           8 |
+| Penny Serenade (1941)                                                             |           8 |
+| Bhaji on the Beach (1993)                                                         |           8 |
+| City of Angels (1998)                                                             |           8 |
+| Chairman of the Board (1998)                                                      |           9 |
+| In the Realm of the Senses (Ai no corrida) (1976)                                 |           9 |
+| Hurricane Streets (1998)                                                          |           9 |
+| Wild America (1997)                                                               |           9 |
+| 'Til There Was You (1997)                                                         |           9 |
+| Hideaway (1995)                                                                   |           9 |
+| Band Wagon, The (1953)                                                            |           9 |
+| Bad Company (1995)                                                                |           9 |
+| Contempt (M?pris, Le) (1963)                                                      |           9 |
+| Winter Guest, The (1997)                                                          |           9 |
+| Man of the House (1995)                                                           |           9 |
+| Geronimo: An American Legend (1993)                                               |           9 |
+| Three Wishes (1995)                                                               |           9 |
+| House Party 3 (1994)                                                              |           9 |
+| Tom & Viv (1994)                                                                  |           9 |
+| Sixth Man, The (1997)                                                             |           9 |
+| Burnt Offerings (1976)                                                            |           9 |
+| Grass Harp, The (1995)                                                            |           9 |
+| Stag (1997)                                                                       |           9 |
+| Man of the Year (1995)                                                            |           9 |
+| Blue Chips (1994)                                                                 |           9 |
+| Month by the Lake, A (1995)                                                       |           9 |
+| Poetic Justice (1993)                                                             |           9 |
+| U.S. Marshalls (1998)                                                             |           9 |
+| Murder, My Sweet (1944)                                                           |           9 |
+| True Crime (1995)                                                                 |           9 |
+| unknown                                                                           |           9 |
+| Last Dance (1996)                                                                 |           9 |
+| Horseman on the Roof, The (Hussard sur le toit, Le) (1995)                        |           9 |
+| Larger Than Life (1996)                                                           |           9 |
+| Heaven & Earth (1993)                                                             |           9 |
+| War Room, The (1993)                                                              |           9 |
+| Touch (1997)                                                                      |           9 |
+| Little Princess, The (1939)                                                       |           9 |
+| Next Karate Kid, The (1994)                                                       |           9 |
+| Fear of a Black Hat (1993)                                                        |          10 |
+| Incognito (1997)                                                                  |          10 |
+| Unhook the Stars (1996)                                                           |          10 |
+| Amazing Panda Adventure, The (1995)                                               |          10 |
+| Gold Diggers: The Secret of Bear Mountain (1995)                                  |          10 |
+| Clean Slate (1994)                                                                |          10 |
+| White Balloon, The (1995)                                                         |          10 |
+| Wonderful, Horrible Life of Leni Riefenstahl, The (1993)                          |          10 |
+| Baby-Sitters Club, The (1995)                                                     |          10 |
+| Faithful (1996)                                                                   |          10 |
+| Browning Version, The (1994)                                                      |          10 |
+| I'll Do Anything (1994)                                                           |          10 |
+| Fresh (1994)                                                                      |          10 |
+| Little Odessa (1994)                                                              |          10 |
+| Endless Summer 2, The (1994)                                                      |          10 |
+| Kazaam (1996)                                                                     |          10 |
+| Ponette (1996)                                                                    |          10 |
+| I Love Trouble (1994)                                                             |          10 |
+| Love in the Afternoon (1957)                                                      |          10 |
+| Crooklyn (1994)                                                                   |          10 |
+| Bloodsport 2 (1995)                                                               |          10 |
+| Cronos (1992)                                                                     |          10 |
+| Before the Rain (Pred dozhdot) (1994)                                             |          10 |
+| Low Down Dirty Shame, A (1994)                                                    |          10 |
+| Lightning Jack (1994)                                                             |          10 |
+| Bitter Moon (1992)                                                                |          10 |
+| Wonderland (1997)                                                                 |          10 |
+| Warriors of Virtue (1997)                                                         |          10 |
+| Picture Bride (1995)                                                              |          10 |
+| Simple Twist of Fate, A (1994)                                                    |          10 |
+| Shooting Fish (1997)                                                              |          10 |
+| White Man's Burden (1995)                                                         |          10 |
+| Cement Garden, The (1993)                                                         |          10 |
+| Herbie Rides Again (1974)                                                         |          11 |
+| Truman Show, The (1998)                                                           |          11 |
+| Free Willy 2: The Adventure Home (1995)                                           |          11 |
+| Fair Game (1995)                                                                  |          11 |
+| Sum of Us, The (1994)                                                             |          11 |
+| Stalker (1979)                                                                    |          11 |
+| Surviving the Game (1994)                                                         |          11 |
+| Robocop 3 (1993)                                                                  |          11 |
+| Critical Care (1997)                                                              |          11 |
+| Wild Things (1998)                                                                |          11 |
+| My Crazy Life (Mi vida loca) (1993)                                               |          11 |
+| Strawberry and Chocolate (Fresa y chocolate) (1993)                               |          11 |
+| Gone Fishin' (1997)                                                               |          11 |
+| Mighty Morphin Power Rangers: The Movie (1995)                                    |          11 |
+| Davy Crockett, King of the Wild Frontier (1955)                                   |          11 |
+| American Buffalo (1996)                                                           |          11 |
+| That Old Feeling (1997)                                                           |          11 |
+| Carried Away (1996)                                                               |          11 |
+| Unzipped (1995)                                                                   |          11 |
+| Addiction, The (1995)                                                             |          11 |
+| Love & Human Remains (1993)                                                       |          12 |
+| Blue Sky (1994)                                                                   |          12 |
+| Love Affair (1994)                                                                |          12 |
+| Radioland Murders (1994)                                                          |          12 |
+| Tom and Huck (1995)                                                               |          12 |
+| Star Maker, The (Uomo delle stelle, L') (1995)                                    |          12 |
+| Striking Distance (1993)                                                          |          12 |
+| Shiloh (1997)                                                                     |          12 |
+| Stalingrad (1993)                                                                 |          12 |
+| Audrey Rose (1977)                                                                |          12 |
+| Vampire in Brooklyn (1995)                                                        |          12 |
+| Bread and Chocolate (Pane e cioccolata) (1973)                                    |          12 |
+| Farewell to Arms, A (1932)                                                        |          12 |
+| Mr. Magoo (1997)                                                                  |          12 |
+| Little Lord Fauntleroy (1936)                                                     |          12 |
+| Pagemaster, The (1994)                                                            |          12 |
+| NeverEnding Story III, The (1994)                                                 |          12 |
+| SubUrbia (1997)                                                                   |          12 |
+| Four Days in September (1997)                                                     |          12 |
+| Alphaville (1965)                                                                 |          12 |
+| Man in the Iron Mask, The (1998)                                                  |          12 |
+| Wild Bill (1995)                                                                  |          12 |
+| For Love or Money (1993)                                                          |          12 |
+| Thin Line Between Love and Hate, A (1996)                                         |          12 |
+| Losing Isaiah (1995)                                                              |          12 |
+| Scout, The (1994)                                                                 |          12 |
+| Solo (1996)                                                                       |          12 |
+| Dear God (1996)                                                                   |          12 |
+| Primary Colors (1998)                                                             |          13 |
+| Body Parts (1991)                                                                 |          13 |
+| Carrington (1995)                                                                 |          13 |
+| Palookaville (1996)                                                               |          13 |
+| Tango Lesson, The (1997)                                                          |          13 |
+| Switchblade Sisters (1975)                                                        |          13 |
+| Heavyweights (1994)                                                               |          13 |
+| Safe (1995)                                                                       |          13 |
+| Manny & Lo (1996)                                                                 |          13 |
+| Roommates (1995)                                                                  |          13 |
+| Withnail and I (1987)                                                             |          13 |
+| Dangerous Beauty (1998)                                                           |          13 |
+| Alaska (1996)                                                                     |          13 |
+| Mark of Zorro, The (1940)                                                         |          13 |
+| Boys of St. Vincent, The (1993)                                                   |          13 |
+| Mad Love (1995)                                                                   |          13 |
+| Red Firecracker, Green Firecracker (1994)                                         |          13 |
+| Kicking and Screaming (1995)                                                      |          13 |
+| Double Team (1997)                                                                |          13 |
+| Telling Lies in America (1997)                                                    |          13 |
+| Heidi Fleiss: Hollywood Madam (1995)                                              |          13 |
+| Poison Ivy II (1995)                                                              |          13 |
+| Cops and Robbersons (1994)                                                        |          13 |
+| Phantoms (1998)                                                                   |          13 |
+| Traveller (1997)                                                                  |          13 |
+| Deep Rising (1998)                                                                |          14 |
+| Big Green, The (1995)                                                             |          14 |
+| Perez Family, The (1995)                                                          |          14 |
+| Wild Reeds (1994)                                                                 |          14 |
+| To Live (Huozhe) (1994)                                                           |          14 |
+| Amityville II: The Possession (1982)                                              |          14 |
+| For Richer or Poorer (1997)                                                       |          14 |
+| Angus (1995)                                                                      |          14 |
+| Fluke (1995)                                                                      |          14 |
+| Big Bully (1996)                                                                  |          14 |
+| Jury Duty (1995)                                                                  |          14 |
+| Braindead (1992)                                                                  |          14 |
+| Palmetto (1998)                                                                   |          14 |
+| Hour of the Pig, The (1993)                                                       |          14 |
+| Foreign Correspondent (1940)                                                      |          15 |
+| April Fool's Day (1986)                                                           |          15 |
+| Celtic Pride (1996)                                                               |          15 |
+| Mrs. Dalloway (1997)                                                              |          15 |
+| Bye Bye, Love (1995)                                                              |          15 |
+| Hard Eight (1996)                                                                 |          15 |
+| Rich Man's Wife, The (1996)                                                       |          15 |
+| Gay Divorcee, The (1934)                                                          |          15 |
+| Haunted World of Edward D. Wood Jr., The (1995)                                   |          15 |
+| Color of Night (1994)                                                             |          15 |
+| Mixed Nuts (1994)                                                                 |          15 |
+| One Night Stand (1997)                                                            |          15 |
+| Daytrippers, The (1996)                                                           |          15 |
+| Foxfire (1996)                                                                    |          15 |
+| Miami Rhapsody (1995)                                                             |          15 |
+| All Dogs Go to Heaven 2 (1996)                                                    |          15 |
+| Princess Caraboo (1994)                                                           |          15 |
+| Go Fish (1994)                                                                    |          15 |
+| Boxing Helena (1993)                                                              |          15 |
+| Cobb (1994)                                                                       |          15 |
+| War, The (1994)                                                                   |          15 |
+| Women, The (1939)                                                                 |          15 |
+| Party Girl (1995)                                                                 |          16 |
+| Balto (1995)                                                                      |          16 |
+| Air Up There, The (1994)                                                          |          16 |
+| Gang Related (1997)                                                               |          16 |
+| Stuart Saves His Family (1995)                                                    |          16 |
+| Selena (1997)                                                                     |          16 |
+| Believers, The (1987)                                                             |          16 |
+| When the Cats Away (Chacun cherche son chat) (1996)                               |          16 |
+| Highlander III: The Sorcerer (1994)                                               |          16 |
+| Bastard Out of Carolina (1996)                                                    |          16 |
+| Jaws 3-D (1983)                                                                   |          16 |
+| Exit to Eden (1994)                                                               |          16 |
+| Dark City (1998)                                                                  |          16 |
+| Cabin Boy (1994)                                                                  |          16 |
+| Bad Taste (1987)                                                                  |          16 |
+| In the Bleak Midwinter (1995)                                                     |          16 |
+| Ruling Class, The (1972)                                                          |          16 |
+| Little Big League (1994)                                                          |          16 |
+| Waiting to Exhale (1995)                                                          |          16 |
+| Jade (1995)                                                                       |          17 |
+| Road to Wellville, The (1994)                                                     |          17 |
+| Big Blue, The (Grand bleu, Le) (1988)                                             |          17 |
+| Madonna: Truth or Dare (1991)                                                     |          17 |
+| Stupids, The (1996)                                                               |          17 |
+| Shall We Dance? (1937)                                                            |          17 |
+| I'm Not Rappaport (1996)                                                          |          17 |
+| Mute Witness (1994)                                                               |          17 |
+| Switchback (1997)                                                                 |          17 |
+| Farinelli: il castrato (1994)                                                     |          17 |
+| Beyond Rangoon (1995)                                                             |          18 |
+| Afterglow (1997)                                                                  |          18 |
+| Dead Presidents (1995)                                                            |          18 |
+| Cutthroat Island (1995)                                                           |          18 |
+| Picnic (1955)                                                                     |          18 |
+| M. Butterfly (1993)                                                               |          18 |
+| Blue Angel, The (Blaue Engel, Der) (1930)                                         |          18 |
+| Lost in Space (1998)                                                              |          18 |
+| Hellraiser: Bloodline (1996)                                                      |          18 |
+| Ready to Wear (Pret-A-Porter) (1994)                                              |          18 |
+| Amateur (1994)                                                                    |          18 |
+| Jingle All the Way (1996)                                                         |          18 |
+| Little Rascals, The (1994)                                                        |          18 |
+| Firestorm (1998)                                                                  |          18 |
+| Hate (Haine, La) (1995)                                                           |          18 |
+| To Be or Not to Be (1942)                                                         |          18 |
+| Thirty-Two Short Films About Glenn Gould (1993)                                   |          18 |
+| Assignment, The (1997)                                                            |          18 |
+| In the Army Now (1994)                                                            |          18 |
+| Inspector General, The (1949)                                                     |          18 |
+| Andre (1994)                                                                      |          18 |
+| Robert A. Heinlein's The Puppet Masters (1994)                                    |          18 |
+| House of Yes, The (1997)                                                          |          18 |
+| Getaway, The (1994)                                                               |          18 |
+| Children of the Corn: The Gathering (1996)                                        |          19 |
+| Blink (1994)                                                                      |          19 |
+| Set It Off (1996)                                                                 |          19 |
+| Surviving Picasso (1996)                                                          |          19 |
+| Widows' Peak (1994)                                                               |          19 |
+| Major Payne (1994)                                                                |          19 |
+| Steel (1997)                                                                      |          19 |
+| Amos & Andrew (1993)                                                              |          19 |
+| Cowboy Way, The (1994)                                                            |          19 |
+| Fatal Instinct (1993)                                                             |          19 |
+| Gridlock'd (1997)                                                                 |          19 |
+| Star Maps (1997)                                                                  |          19 |
+| That Darn Cat! (1965)                                                             |          19 |
+| Backbeat (1993)                                                                   |          19 |
+| D3: The Mighty Ducks (1996)                                                       |          19 |
+| Home Alone 3 (1997)                                                               |          19 |
+| Out to Sea (1997)                                                                 |          19 |
+| Trust (1990)                                                                      |          19 |
+| For Whom the Bell Tolls (1943)                                                    |          20 |
+| Goofy Movie, A (1995)                                                             |          20 |
+| Prophecy II, The (1998)                                                           |          20 |
+| Half Baked (1998)                                                                 |          20 |
+| Specialist, The (1994)                                                            |          20 |
+| Flipper (1996)                                                                    |          20 |
+| Paradise Lost: The Child Murders at Robin Hood Hills (1996)                       |          20 |
+| Kiss of Death (1995)                                                              |          20 |
+| Beverly Hillbillies, The (1993)                                                   |          20 |
+| Indian Summer (1996)                                                              |          20 |
+| Ma vie en rose (My Life in Pink) (1997)                                           |          20 |
+| Maximum Risk (1996)                                                               |          20 |
+| How to Be a Player (1997)                                                         |          21 |
+| Mis?rables, Les (1995)                                                            |          21 |
+| Umbrellas of Cherbourg, The (Parapluies de Cherbourg, Les) (1964)                 |          21 |
+| Top Hat (1935)                                                                    |          21 |
+| Anne Frank Remembered (1995)                                                      |          21 |
+| My Family (1995)                                                                  |          21 |
+| Richie Rich (1994)                                                                |          21 |
+| Funeral, The (1996)                                                               |          21 |
+| Candyman: Farewell to the Flesh (1995)                                            |          21 |
+| Funny Face (1957)                                                                 |          21 |
+| Oscar & Lucinda (1997)                                                            |          21 |
+| Lawnmower Man 2: Beyond Cyberspace (1996)                                         |          21 |
+| It's My Party (1995)                                                              |          21 |
+| Mrs. Parker and the Vicious Circle (1994)                                         |          22 |
+| Welcome To Sarajevo (1997)                                                        |          22 |
+| Body Snatcher, The (1945)                                                         |          22 |
+| Double vie de V?ronique, La (Double Life of Veronique, The) (1991)                |          22 |
+| Mrs. Winterbourne (1996)                                                          |          22 |
+| Little Buddha (1993)                                                              |          22 |
+| Oliver & Company (1988)                                                           |          22 |
+| Pallbearer, The (1996)                                                            |          22 |
+| Three Caballeros, The (1945)                                                      |          22 |
+| Mother Night (1996)                                                               |          22 |
+| Blood & Wine (1997)                                                               |          22 |
+| Bogus (1996)                                                                      |          22 |
+| Village of the Damned (1995)                                                      |          22 |
+| Marked for Death (1990)                                                           |          22 |
+| Unstrung Heroes (1995)                                                            |          22 |
+| Kama Sutra: A Tale of Love (1996)                                                 |          22 |
+| Kid in King Arthur's Court, A (1995)                                              |          22 |
+| Live Nude Girls (1995)                                                            |          23 |
+| Fog, The (1980)                                                                   |          23 |
+| Ruby in Paradise (1993)                                                           |          23 |
+| Cemetery Man (Dellamorte Dellamore) (1994)                                        |          23 |
+| Showgirls (1995)                                                                  |          23 |
+| Kansas City (1996)                                                                |          23 |
+| Turbulence (1997)                                                                 |          23 |
+| Until the End of the World (Bis ans Ende der Welt) (1991)                         |          23 |
+| Jude (1996)                                                                       |          23 |
+| Trial and Error (1997)                                                            |          23 |
+| Mr. Wrong (1996)                                                                  |          23 |
+| Inventing the Abbotts (1997)                                                      |          23 |
+| Cry, the Beloved Country (1995)                                                   |          24 |
+| Garden of Finzi-Contini, The (Giardino dei Finzi-Contini, Il) (1970)              |          24 |
+| House of the Spirits, The (1993)                                                  |          24 |
+| Lord of Illusions (1995)                                                          |          24 |
+| Fools Rush In (1997)                                                              |          24 |
+| Burnt By the Sun (1994)                                                           |          24 |
+| Grease 2 (1982)                                                                   |          24 |
+| Now and Then (1995)                                                               |          24 |
+| Microcosmos: Le peuple de l'herbe (1996)                                          |          24 |
+| Queen Margot (Reine Margot, La) (1994)                                            |          24 |
+| Drop Dead Fred (1991)                                                             |          24 |
+| Houseguest (1994)                                                                 |          24 |
+| Halloween: The Curse of Michael Myers (1995)                                      |          25 |
+| Girl 6 (1996)                                                                     |          25 |
+| Two if by Sea (1996)                                                              |          25 |
+| Judgment Night (1993)                                                             |          25 |
+| Naked (1993)                                                                      |          25 |
+| Keys to Tulsa (1997)                                                              |          25 |
+| House Arrest (1996)                                                               |          25 |
+| Smile Like Yours, A (1997)                                                        |          25 |
+| Meet John Doe (1941)                                                              |          25 |
+| Portrait of a Lady, The (1996)                                                    |          25 |
+| Apple Dumpling Gang, The (1975)                                                   |          25 |
+| Relic, The (1997)                                                                 |          25 |
+| Dracula: Dead and Loving It (1995)                                                |          25 |
+| Fearless (1993)                                                                   |          25 |
+| Ninotchka (1939)                                                                  |          26 |
+| Before and After (1996)                                                           |          26 |
+| Affair to Remember, An (1957)                                                     |          26 |
+| Friday (1995)                                                                     |          26 |
+| Shanghai Triad (Yao a yao yao dao waipo qiao) (1995)                              |          26 |
+| Walkabout (1971)                                                                  |          26 |
+| Love! Valour! Compassion! (1997)                                                  |          26 |
+| Ghost in the Shell (Kokaku kidotai) (1995)                                        |          26 |
+| In the Mouth of Madness (1995)                                                    |          26 |
+| Super Mario Bros. (1993)                                                          |          26 |
+| Something to Talk About (1995)                                                    |          26 |
+| Aladdin and the King of Thieves (1996)                                            |          26 |
+| Spice World (1997)                                                                |          26 |
+| Pillow Book, The (1995)                                                           |          26 |
+| Black Beauty (1994)                                                               |          27 |
+| Quest, The (1996)                                                                 |          27 |
+| Vanya on 42nd Street (1994)                                                       |          27 |
+| Wishmaster (1997)                                                                 |          27 |
+| Heaven's Prisoners (1996)                                                         |          27 |
+| Paris Is Burning (1990)                                                           |          27 |
+| Living in Oblivion (1995)                                                         |          27 |
+| Manhattan Murder Mystery (1993)                                                   |          27 |
+| Spanking the Monkey (1994)                                                        |          27 |
+| My Man Godfrey (1936)                                                             |          27 |
+| Pollyanna (1960)                                                                  |          27 |
+| Tales from the Hood (1995)                                                        |          27 |
+| Made in America (1993)                                                            |          27 |
+| Great Expectations (1998)                                                         |          27 |
+| Exotica (1994)                                                                    |          27 |
+| Free Willy 3: The Rescue (1997)                                                   |          27 |
+| Another Stakeout (1993)                                                           |          28 |
+| Crossing Guard, The (1995)                                                        |          28 |
+| Just Cause (1995)                                                                 |          28 |
+| Passion Fish (1992)                                                               |          28 |
+| In Love and War (1996)                                                            |          28 |
+| Blues Brothers 2000 (1998)                                                        |          28 |
+| Chungking Express (1994)                                                          |          28 |
+| Once Upon a Time... When We Were Colored (1995)                                   |          28 |
+| Beverly Hills Cop III (1994)                                                      |          28 |
+| Barbarella (1968)                                                                 |          28 |
+| Death and the Maiden (1994)                                                       |          28 |
+| Canadian Bacon (1994)                                                             |          29 |
+| Stephen King's The Langoliers (1995)                                              |          29 |
+| Blown Away (1994)                                                                 |          29 |
+| If Lucy Fell (1996)                                                               |          29 |
+| Deceiver (1997)                                                                   |          29 |
+| Evening Star, The (1996)                                                          |          29 |
+| Twelfth Night (1996)                                                              |          29 |
+| Ghosts of Mississippi (1996)                                                      |          29 |
+| High School High (1996)                                                           |          29 |
+| Beautiful Thing (1996)                                                            |          29 |
+| Shaggy Dog, The (1959)                                                            |          30 |
+| Georgia (1995)                                                                    |          30 |
+| FairyTale: A True Story (1997)                                                    |          30 |
+| My Own Private Idaho (1991)                                                       |          30 |
+| Higher Learning (1995)                                                            |          30 |
+| Barb Wire (1996)                                                                  |          30 |
+| Spellbound (1945)                                                                 |          30 |
+| Escape to Witch Mountain (1975)                                                   |          30 |
+| Flintstones, The (1994)                                                           |          31 |
+| Bio-Dome (1996)                                                                   |          31 |
+| Operation Dumbo Drop (1995)                                                       |          31 |
+| Hard Rain (1998)                                                                  |          31 |
+| Meet Me in St. Louis (1944)                                                       |          31 |
+| Once Were Warriors (1994)                                                         |          31 |
+| Drop Zone (1994)                                                                  |          31 |
+| Threesome (1994)                                                                  |          31 |
+| Die xue shuang xiong (Killer, The) (1989)                                         |          31 |
+| Great Race, The (1965)                                                            |          31 |
+| Fathers' Day (1997)                                                               |          31 |
+| Timecop (1994)                                                                    |          31 |
+| Program, The (1993)                                                               |          31 |
+| Kiss Me, Guido (1997)                                                             |          31 |
+| Brassed Off (1996)                                                                |          32 |
+| Tie Me Up! Tie Me Down! (1990)                                                    |          32 |
+| Fast, Cheap & Out of Control (1997)                                               |          32 |
+| Homeward Bound II: Lost in San Francisco (1996)                                   |          32 |
+| Prophecy, The (1995)                                                              |          32 |
+| Boomerang (1992)                                                                  |          32 |
+| Airheads (1994)                                                                   |          32 |
+| Night Falls on Manhattan (1997)                                                   |          32 |
+| Feeling Minnesota (1996)                                                          |          32 |
+| Eye for an Eye (1996)                                                             |          32 |
+| Cats Don't Dance (1997)                                                           |          32 |
+| Transformers: The Movie, The (1986)                                               |          32 |
+| Englishman Who Went Up a Hill, But Came Down a Mountain, The (1995)               |          32 |
+| Old Man and the Sea, The (1958)                                                   |          32 |
+| Clockers (1995)                                                                   |          33 |
+| Anna Karenina (1997)                                                              |          33 |
+| Paths of Glory (1957)                                                             |          33 |
+| Hackers (1995)                                                                    |          33 |
+| Free Willy (1993)                                                                 |          33 |
+| Jeffrey (1995)                                                                    |          34 |
+| Boys on the Side (1995)                                                           |          34 |
+| Touch of Evil (1958)                                                              |          34 |
+| Terminal Velocity (1994)                                                          |          34 |
+| Fled (1996)                                                                       |          34 |
+| Mediterraneo (1991)                                                               |          34 |
+| Dead Man (1995)                                                                   |          34 |
+| Orlando (1993)                                                                    |          34 |
+| Lost Horizon (1937)                                                               |          34 |
+| Washington Square (1997)                                                          |          34 |
+| Unforgettable (1996)                                                              |          34 |
+| Gaslight (1944)                                                                   |          35 |
+| Down by Law (1986)                                                                |          35 |
+| Wes Craven's New Nightmare (1994)                                                 |          35 |
+| Trigger Effect, The (1996)                                                        |          35 |
+| Don't Be a Menace to South Central While Drinking Your Juice in the Hood (1996)   |          35 |
+| Thin Blue Line, The (1988)                                                        |          35 |
+| Metro (1997)                                                                      |          36 |
+| Night on Earth (1991)                                                             |          36 |
+| Speechless (1994)                                                                 |          36 |
+| Billy Madison (1995)                                                              |          37 |
+| Sliver (1993)                                                                     |          37 |
+| Belle de jour (1967)                                                              |          37 |
+| Ace Ventura: When Nature Calls (1995)                                             |          37 |
+| I Shot Andy Warhol (1996)                                                         |          37 |
+| Milk Money (1994)                                                                 |          37 |
+| Thousand Acres, A (1997)                                                          |          37 |
+| Romeo Is Bleeding (1993)                                                          |          37 |
+| 8 1/2 (1963)                                                                      |          38 |
+| Get on the Bus (1996)                                                             |          38 |
+| Virtuosity (1995)                                                                 |          38 |
+| Anaconda (1997)                                                                   |          38 |
+| Speed 2: Cruise Control (1997)                                                    |          38 |
+| Once Upon a Time in the West (1969)                                               |          38 |
+| Howling, The (1981)                                                               |          38 |
+| Only You (1994)                                                                   |          39 |
+| Indian in the Cupboard, The (1995)                                                |          39 |
+| Candidate, The (1972)                                                             |          39 |
+| Assassins (1995)                                                                  |          39 |
+| Angels in the Outfield (1994)                                                     |          39 |
+| Corrina, Corrina (1994)                                                           |          39 |
+| Career Girls (1997)                                                               |          39 |
+| Crow: City of Angels, The (1996)                                                  |          39 |
+| Son in Law (1993)                                                                 |          39 |
+| French Twist (Gazon maudit) (1995)                                                |          39 |
+| Adventures of Pinocchio, The (1996)                                               |          39 |
+| Judge Dredd (1995)                                                                |          39 |
+| Swiss Family Robinson (1960)                                                      |          39 |
+| Replacement Killers, The (1998)                                                   |          39 |
+| Mary Reilly (1996)                                                                |          39 |
+| When a Man Loves a Woman (1994)                                                   |          39 |
+| Laura (1944)                                                                      |          40 |
+| Killing Zoe (1994)                                                                |          40 |
+| Basketball Diaries, The (1995)                                                    |          40 |
+| Hard Target (1993)                                                                |          40 |
+| First Kid (1996)                                                                  |          40 |
+| Paper, The (1994)                                                                 |          40 |
+| Tin Drum, The (Blechtrommel, Die) (1979)                                          |          40 |
+| Priest (1994)                                                                     |          40 |
+| Harriet the Spy (1996)                                                            |          40 |
+| Disclosure (1994)                                                                 |          40 |
+| Eddie (1996)                                                                      |          40 |
+| Charade (1963)                                                                    |          40 |
+| Some Folks Call It a Sling Blade (1993)                                           |          41 |
+| Tank Girl (1995)                                                                  |          41 |
+| Fallen (1998)                                                                     |          41 |
+| 187 (1997)                                                                        |          41 |
+| That Darn Cat! (1997)                                                             |          41 |
+| Sphere (1998)                                                                     |          41 |
+| Little Princess, A (1995)                                                         |          41 |
+| Young Poisoner's Handbook, The (1995)                                             |          41 |
+| Johnny Mnemonic (1995)                                                            |          41 |
+| Coneheads (1993)                                                                  |          41 |
+| Gigi (1958)                                                                       |          41 |
+| Associate, The (1996)                                                             |          41 |
+| Love Jones (1997)                                                                 |          42 |
+| Freeway (1996)                                                                    |          42 |
+| Congo (1995)                                                                      |          42 |
+| Flirting With Disaster (1996)                                                     |          42 |
+| Kundun (1997)                                                                     |          42 |
+| Moll Flanders (1996)                                                              |          42 |
+| Big Lebowski, The (1998)                                                          |          42 |
+| Wild Bunch, The (1969)                                                            |          43 |
+| Renaissance Man (1994)                                                            |          43 |
+| Playing God (1997)                                                                |          43 |
+| Pete's Dragon (1977)                                                              |          43 |
+| Ghost and Mrs. Muir, The (1947)                                                   |          43 |
+| Chamber, The (1996)                                                               |          43 |
+| Rising Sun (1993)                                                                 |          43 |
+| Money Train (1995)                                                                |          43 |
+| Mortal Kombat: Annihilation (1997)                                                |          43 |
+| Tales From the Crypt Presents: Demon Knight (1995)                                |          43 |
+| Spy Hard (1996)                                                                   |          43 |
+| Air Bud (1997)                                                                    |          43 |
+| To Gillian on Her 37th Birthday (1996)                                            |          44 |
+| Mouse Hunt (1997)                                                                 |          44 |
+| Return of Martin Guerre, The (Retour de Martin Guerre, Le) (1982)                 |          44 |
+| City Slickers II: The Legend of Curly's Gold (1994)                               |          44 |
+| Ridicule (1996)                                                                   |          44 |
+| Sweet Hereafter, The (1997)                                                       |          44 |
+| Fire Down Below (1997)                                                            |          44 |
+| Young Guns II (1990)                                                              |          44 |
+| Basquiat (1996)                                                                   |          44 |
+| Shadow Conspiracy (1997)                                                          |          44 |
+| When We Were Kings (1996)                                                         |          44 |
+| Bottle Rocket (1996)                                                              |          44 |
+| Nick of Time (1995)                                                               |          44 |
+| M (1931)                                                                          |          44 |
+| Persuasion (1995)                                                                 |          44 |
+| Leave It to Beaver (1997)                                                         |          44 |
+| Fear (1996)                                                                       |          44 |
+| Species (1995)                                                                    |          45 |
+| Shadow, The (1994)                                                                |          45 |
+| Family Thing, A (1996)                                                            |          45 |
+| What's Love Got to Do with It (1993)                                              |          45 |
+| Joe's Apartment (1996)                                                            |          45 |
+| Blue in the Face (1995)                                                           |          45 |
+| Junior (1994)                                                                     |          45 |
+| Citizen Ruth (1996)                                                               |          45 |
+| It Could Happen to You (1994)                                                     |          46 |
+| Shall We Dance? (1996)                                                            |          46 |
+| Farewell My Concubine (1993)                                                      |          46 |
+| Doors, The (1991)                                                                 |          46 |
+| Blob, The (1958)                                                                  |          46 |
+| Malice (1993)                                                                     |          46 |
+| Paris, Texas (1984)                                                               |          46 |
+| Screamers (1995)                                                                  |          46 |
+| Bride of Frankenstein (1935)                                                      |          46 |
+| Great Dictator, The (1940)                                                        |          46 |
+| With Honors (1994)                                                                |          46 |
+| Nobody's Fool (1994)                                                              |          46 |
+| Sudden Death (1995)                                                               |          47 |
+| Dangerous Minds (1995)                                                            |          47 |
+| Waiting for Guffman (1996)                                                        |          47 |
+| Up in Smoke (1978)                                                                |          47 |
+| Mad City (1997)                                                                   |          47 |
+| Swimming with Sharks (1995)                                                       |          47 |
+| Quick and the Dead, The (1995)                                                    |          48 |
+| Beverly Hills Ninja (1997)                                                        |          48 |
+| Cat People (1982)                                                                 |          48 |
+| Glimmer Man, The (1996)                                                           |          48 |
+| Powder (1995)                                                                     |          48 |
+| Bronx Tale, A (1993)                                                              |          48 |
+| Smilla's Sense of Snow (1997)                                                     |          48 |
+| Under Siege 2: Dark Territory (1995)                                              |          48 |
+| Booty Call (1997)                                                                 |          48 |
+| Kids (1995)                                                                       |          49 |
+| Thinner (1996)                                                                    |          49 |
+| Great White Hype, The (1996)                                                      |          49 |
+| Mortal Kombat (1995)                                                              |          49 |
+| Before Sunrise (1995)                                                             |          49 |
+| Rocket Man (1997)                                                                 |          49 |
+| Substitute, The (1996)                                                            |          49 |
+| Bulletproof (1996)                                                                |          49 |
+| Wyatt Earp (1994)                                                                 |          50 |
+| Once Upon a Time in America (1984)                                                |          50 |
+| Trees Lounge (1996)                                                               |          50 |
+| American in Paris, An (1951)                                                      |          50 |
+| Menace II Society (1993)                                                          |          50 |
+| Akira (1988)                                                                      |          50 |
+| Love Bug, The (1969)                                                              |          50 |
+| To Catch a Thief (1955)                                                           |          50 |
+| Perfect World, A (1993)                                                           |          50 |
+| Giant (1956)                                                                      |          51 |
+| MatchMaker, The (1997)                                                            |          51 |
+| Tin Men (1987)                                                                    |          51 |
+| Pocahontas (1995)                                                                 |          51 |
+| Man Who Knew Too Little, The (1997)                                               |          52 |
+| Notorious (1946)                                                                  |          52 |
+| Excess Baggage (1997)                                                             |          52 |
+| Red Rock West (1992)                                                              |          52 |
+| Casper (1995)                                                                     |          52 |
+| Flubber (1997)                                                                    |          53 |
+| She's So Lovely (1997)                                                            |          53 |
+| Days of Thunder (1990)                                                            |          53 |
+| Life Less Ordinary, A (1997)                                                      |          53 |
+| Barcelona (1994)                                                                  |          53 |
+| Last Man Standing (1996)                                                          |          53 |
+| Koyaanisqatsi (1983)                                                              |          53 |
+| Amityville Horror, The (1979)                                                     |          53 |
+| Mallrats (1995)                                                                   |          54 |
+| Carlito's Way (1993)                                                              |          54 |
+| Nosferatu (Nosferatu, eine Symphonie des Grauens) (1922)                          |          54 |
+| Serial Mom (1994)                                                                 |          54 |
+| Aristocats, The (1970)                                                            |          54 |
+| Addicted to Love (1997)                                                           |          54 |
+| Tales from the Crypt Presents: Bordello of Blood (1996)                           |          55 |
+| Apostle, The (1997)                                                               |          55 |
+| Black Sheep (1996)                                                                |          55 |
+| Looking for Richard (1996)                                                        |          55 |
+| Robin Hood: Men in Tights (1993)                                                  |          56 |
+| Celluloid Closet, The (1995)                                                      |          56 |
+| His Girl Friday (1940)                                                            |          56 |
+| Island of Dr. Moreau, The (1996)                                                  |          57 |
+| Bananas (1971)                                                                    |          57 |
+| Bedknobs and Broomsticks (1971)                                                   |          57 |
+| Bad Boys (1995)                                                                   |          57 |
+| Wings of Desire (1987)                                                            |          57 |
+| Red Corner (1997)                                                                 |          57 |
+| Daylight (1996)                                                                   |          57 |
+| Devil in a Blue Dress (1995)                                                      |          57 |
+| To Wong Foo, Thanks for Everything! Julie Newmar (1995)                           |          57 |
+| Postman, The (1997)                                                               |          58 |
+| Raise the Red Lantern (1991)                                                      |          58 |
+| Manon of the Spring (Manon des sources) (1986)                                    |          58 |
+| Ref, The (1994)                                                                   |          58 |
+| Last Supper, The (1995)                                                           |          58 |
+| Sophie's Choice (1982)                                                            |          58 |
+| Home for the Holidays (1995)                                                      |          58 |
+| Nine Months (1995)                                                                |          58 |
+| 39 Steps, The (1935)                                                              |          59 |
+| Some Kind of Wonderful (1987)                                                     |          59 |
+| Mary Shelley's Frankenstein (1994)                                                |          59 |
+| East of Eden (1955)                                                               |          59 |
+| Last Action Hero (1993)                                                           |          59 |
+| Soul Food (1997)                                                                  |          59 |
+| Three Colors: White (1994)                                                        |          59 |
+| Sirens (1994)                                                                     |          59 |
+| Kalifornia (1993)                                                                 |          59 |
+| Around the World in 80 Days (1956)                                                |          59 |
+| Murder in the First (1995)                                                        |          60 |
+| Weekend at Bernie's (1989)                                                        |          60 |
+| Thin Man, The (1934)                                                              |          60 |
+| Father of the Bride (1950)                                                        |          60 |
+| Bed of Roses (1996)                                                               |          60 |
+| Homeward Bound: The Incredible Journey (1993)                                     |          61 |
+| Fox and the Hound, The (1981)                                                     |          61 |
+| Cat on a Hot Tin Roof (1958)                                                      |          62 |
+| My Favorite Year (1982)                                                           |          62 |
+| Batman & Robin (1997)                                                             |          62 |
+| Forget Paris (1995)                                                               |          62 |
+| Walk in the Clouds, A (1995)                                                      |          63 |
+| Local Hero (1983)                                                                 |          63 |
+| Jane Eyre (1996)                                                                  |          63 |
+| Immortal Beloved (1994)                                                           |          63 |
+| Star Trek V: The Final Frontier (1989)                                            |          63 |
+| Apartment, The (1960)                                                             |          63 |
+| Rudy (1993)                                                                       |          64 |
+| Fan, The (1996)                                                                   |          64 |
+| U Turn (1997)                                                                     |          64 |
+| Stealing Beauty (1996)                                                            |          64 |
+| Sabrina (1954)                                                                    |          64 |
+| Old Yeller (1957)                                                                 |          64 |
+| Jean de Florette (1986)                                                           |          64 |
+| Three Colors: Blue (1993)                                                         |          64 |
+| Extreme Measures (1996)                                                           |          64 |
+| Eve's Bayou (1997)                                                                |          64 |
+| Dazed and Confused (1993)                                                         |          64 |
+| Night of the Living Dead (1968)                                                   |          64 |
+| Deconstructing Harry (1997)                                                       |          65 |
+| Age of Innocence, The (1993)                                                      |          65 |
+| Kids in the Hall: Brain Candy (1996)                                              |          65 |
+| Delicatessen (1991)                                                               |          65 |
+| Lawnmower Man, The (1992)                                                         |          65 |
+| Sunset Blvd. (1950)                                                               |          65 |
+| Candyman (1992)                                                                   |          65 |
+| Supercop (1992)                                                                   |          65 |
+| Mirror Has Two Faces, The (1996)                                                  |          66 |
+| Anastasia (1997)                                                                  |          66 |
+| Tommy Boy (1995)                                                                  |          66 |
+| Diva (1981)                                                                       |          66 |
+| In the Company of Men (1997)                                                      |          66 |
+| Cyrano de Bergerac (1990)                                                         |          66 |
+| Jaws 2 (1978)                                                                     |          66 |
+| All About Eve (1950)                                                              |          66 |
+| Rebecca (1940)                                                                    |          66 |
+| Hercules (1997)                                                                   |          66 |
+| Grand Day Out, A (1992)                                                           |          66 |
+| Shallow Grave (1994)                                                              |          66 |
+| Forbidden Planet (1956)                                                           |          67 |
+| Adventures of Robin Hood, The (1938)                                              |          67 |
+| Wolf (1994)                                                                       |          67 |
+| Striptease (1996)                                                                 |          67 |
+| Short Cuts (1993)                                                                 |          67 |
+| Bridges of Madison County, The (1995)                                             |          67 |
+| Private Benjamin (1980)                                                           |          67 |
+| Wallace & Gromit: The Best of Aardman Animation (1996)                            |          67 |
+| Quiet Man, The (1952)                                                             |          67 |
+| Preacher's Wife, The (1996)                                                       |          68 |
+| Man Without a Face, The (1993)                                                    |          68 |
+| Dial M for Murder (1954)                                                          |          68 |
+| Hot Shots! Part Deux (1993)                                                       |          68 |
+| Cool Runnings (1993)                                                              |          68 |
+| Roman Holiday (1953)                                                              |          68 |
+| Bringing Up Baby (1938)                                                           |          68 |
+| McHale's Navy (1997)                                                              |          69 |
+| Antonia's Line (1995)                                                             |          69 |
+| Body Snatchers (1993)                                                             |          69 |
+| Kull the Conqueror (1997)                                                         |          69 |
+| Christmas Carol, A (1938)                                                         |          69 |
+| Naked Gun 33 1/3: The Final Insult (1994)                                         |          69 |
+| Dumb & Dumber (1994)                                                              |          69 |
+| Glengarry Glen Ross (1992)                                                        |          69 |
+| Enchanted April (1991)                                                            |          70 |
+| Jack (1996)                                                                       |          70 |
+| Heavenly Creatures (1994)                                                         |          70 |
+| Ran (1985)                                                                        |          70 |
+| Secret of Roan Inish, The (1994)                                                  |          71 |
+| How to Make an American Quilt (1995)                                              |          71 |
+| Things to Do in Denver when You're Dead (1995)                                    |          71 |
+| Restoration (1995)                                                                |          71 |
+| Diabolique (1996)                                                                 |          71 |
+| Desperate Measures (1998)                                                         |          72 |
+| Wedding Singer, The (1998)                                                        |          72 |
+| Third Man, The (1949)                                                             |          72 |
+| Seventh Seal, The (Sjunde inseglet, Det) (1957)                                   |          72 |
+| 20,000 Leagues Under the Sea (1954)                                               |          72 |
+| Angels and Insects (1995)                                                         |          72 |
+| Othello (1995)                                                                    |          72 |
+| She's the One (1996)                                                              |          73 |
+| Hoodlum (1997)                                                                    |          73 |
+| Heavy Metal (1981)                                                                |          73 |
+| Brothers McMullen, The (1995)                                                     |          73 |
+| Big Sleep, The (1946)                                                             |          73 |
+| Parent Trap, The (1961)                                                           |          73 |
+| Sgt. Bilko (1996)                                                                 |          74 |
+| Breaking the Waves (1996)                                                         |          74 |
+| Six Degrees of Separation (1993)                                                  |          74 |
+| Smoke (1995)                                                                      |          74 |
+| Robin Hood: Prince of Thieves (1991)                                              |          75 |
+| Winnie the Pooh and the Blustery Day (1968)                                       |          75 |
+| Vegas Vacation (1997)                                                             |          75 |
+| Wings of the Dove, The (1997)                                                     |          75 |
+| Circle of Friends (1995)                                                          |          76 |
+| Don Juan DeMarco (1995)                                                           |          76 |
+| Brady Bunch Movie, The (1995)                                                     |          76 |
+| Reality Bites (1994)                                                              |          77 |
+| Crucible, The (1996)                                                              |          77 |
+| Victor/Victoria (1982)                                                            |          77 |
+| Breakdown (1997)                                                                  |          77 |
+| Shadowlands (1993)                                                                |          78 |
+| Marvin's Room (1996)                                                              |          78 |
+| Better Off Dead... (1985)                                                         |          79 |
+| City Hall (1996)                                                                  |          79 |
+| Pump Up the Volume (1990)                                                         |          79 |
+| Dolores Claiborne (1994)                                                          |          79 |
+| Secret Garden, The (1993)                                                         |          79 |
+| Chain Reaction (1996)                                                             |          80 |
+| Eat Drink Man Woman (1994)                                                        |          80 |
+| Phantom, The (1996)                                                               |          80 |
+| Man Who Would Be King, The (1975)                                                 |          80 |
+| Treasure of the Sierra Madre, The (1948)                                          |          80 |
+| Midnight in the Garden of Good and Evil (1997)                                    |          80 |
+| I.Q. (1994)                                                                       |          81 |
+| It Happened One Night (1934)                                                      |          81 |
+| Alice in Wonderland (1951)                                                        |          81 |
+| Legends of the Fall (1994)                                                        |          81 |
+| Crumb (1994)                                                                      |          81 |
+| Picture Perfect (1997)                                                            |          81 |
+| Nell (1994)                                                                       |          81 |
+| Juror, The (1996)                                                                 |          82 |
+| Mulholland Falls (1996)                                                           |          82 |
+| Sword in the Stone, The (1963)                                                    |          82 |
+| Cook the Thief His Wife & Her Lover, The (1989)                                   |          82 |
+| Somewhere in Time (1980)                                                          |          82 |
+| Santa Clause, The (1994)                                                          |          82 |
+| Sleeper (1973)                                                                    |          82 |
+| Arrival, The (1996)                                                               |          83 |
+| Three Colors: Red (1994)                                                          |          83 |
+| French Kiss (1995)                                                                |          84 |
+| Muppet Treasure Island (1996)                                                     |          84 |
+| Up Close and Personal (1996)                                                      |          85 |
+| Jungle Book, The (1994)                                                           |          85 |
+| Omen, The (1976)                                                                  |          85 |
+| Bob Roberts (1992)                                                                |          85 |
+| White Squall (1996)                                                               |          85 |
+| Cape Fear (1962)                                                                  |          86 |
+| Bullets Over Broadway (1994)                                                      |          86 |
+| First Knight (1995)                                                               |          86 |
+| Beautician and the Beast, The (1997)                                              |          86 |
+| My Fellow Americans (1996)                                                        |          86 |
+| Copycat (1995)                                                                    |          86 |
+| Jackal, The (1997)                                                                |          87 |
+| To Die For (1995)                                                                 |          87 |
+| Addams Family Values (1993)                                                       |          87 |
+| Strange Days (1995)                                                               |          87 |
+| High Noon (1952)                                                                  |          88 |
+| Grifters, The (1990)                                                              |          89 |
+| Three Musketeers, The (1993)                                                      |          89 |
+| Miller's Crossing (1990)                                                          |          89 |
+| Richard III (1995)                                                                |          89 |
+| Evil Dead II (1987)                                                               |          89 |
+| Rebel Without a Cause (1955)                                                      |          90 |
+| Hamlet (1996)                                                                     |          90 |
+| Nixon (1995)                                                                      |          90 |
+| Four Rooms (1995)                                                                 |          90 |
+| Rosencrantz and Guildenstern Are Dead (1990)                                      |          90 |
+| Madness of King George, The (1994)                                                |          91 |
+| Escape from L.A. (1996)                                                           |          91 |
+| Bean (1997)                                                                       |          91 |
+| Escape from New York (1981)                                                       |          91 |
+| Casino (1995)                                                                     |          91 |
+| Manhattan (1979)                                                                  |          91 |
+| Demolition Man (1993)                                                             |          92 |
+| Return of the Pink Panther, The (1974)                                            |          92 |
+| Michael Collins (1996)                                                            |          92 |
+| Rob Roy (1995)                                                                    |          92 |
+| From Dusk Till Dawn (1996)                                                        |          92 |
+| Unbearable Lightness of Being, The (1988)                                         |          92 |
+| Money Talks (1997)                                                                |          92 |
+| Space Jam (1996)                                                                  |          93 |
+| Duck Soup (1933)                                                                  |          93 |
+| My Life as a Dog (Mitt liv som hund) (1985)                                       |          93 |
+| Very Brady Sequel, A (1996)                                                       |          93 |
+| 2 Days in the Valley (1996)                                                       |          93 |
+| Cliffhanger (1993)                                                                |          93 |
+| So I Married an Axe Murderer (1993)                                               |          95 |
+| Matilda (1996)                                                                    |          95 |
+| Breakfast at Tiffany's (1961)                                                     |          95 |
+| Jumanji (1995)                                                                    |          96 |
+| City of Lost Children, The (1995)                                                 |          96 |
+| Fierce Creatures (1997)                                                           |          96 |
+| Mrs. Brown (Her Majesty, Mrs. Brown) (1997)                                       |          96 |
+| Day the Earth Stood Still, The (1951)                                             |          97 |
+| Spitfire Grill, The (1996)                                                        |          97 |
+| Client, The (1994)                                                                |          97 |
+| Desperado (1995)                                                                  |          97 |
+| Streetcar Named Desire, A (1951)                                                  |          98 |
+| Dirty Dancing (1987)                                                              |          98 |
+| Romy and Michele's High School Reunion (1997)                                     |          98 |
+| American Werewolf in London, An (1981)                                            |          99 |
+| Alien 3 (1992)                                                                    |         100 |
+| I Know What You Did Last Summer (1997)                                            |         100 |
+| Muriel's Wedding (1994)                                                           |         100 |
+| Private Parts (1997)                                                              |         100 |
+| Sex, Lies, and Videotape (1989)                                                   |         101 |
+| Young Guns (1988)                                                                 |         101 |
+| Down Periscope (1996)                                                             |         101 |
+| Basic Instinct (1992)                                                             |         101 |
+| Mimic (1997)                                                                      |         101 |
+| Pinocchio (1940)                                                                  |         101 |
+| Miracle on 34th Street (1994)                                                     |         101 |
+| In the Name of the Father (1993)                                                  |         102 |
+| Benny & Joon (1993)                                                               |         102 |
+| Waterworld (1995)                                                                 |         102 |
+| Little Women (1994)                                                               |         102 |
+| Ace Ventura: Pet Detective (1994)                                                 |         103 |
+| Craft, The (1996)                                                                 |         104 |
+| Outbreak (1995)                                                                   |         104 |
+| Strictly Ballroom (1992)                                                          |         104 |
+| True Romance (1993)                                                               |         104 |
+| Philadelphia Story, The (1940)                                                    |         104 |
+| Mr. Smith Goes to Washington (1939)                                               |         105 |
+| On Golden Pond (1981)                                                             |         106 |
+| Cable Guy, The (1996)                                                             |         106 |
+| Scream 2 (1997)                                                                   |         106 |
+| William Shakespeare's Romeo and Juliet (1996)                                     |         106 |
+| Conan the Barbarian (1981)                                                        |         107 |
+| Tombstone (1993)                                                                  |         108 |
+| Ice Storm, The (1997)                                                             |         108 |
+| 101 Dalmatians (1996)                                                             |         109 |
+| Hudsucker Proxy, The (1994)                                                       |         110 |
+| Adventures of Priscilla, Queen of the Desert, The (1994)                          |         111 |
+| Nightmare on Elm Street, A (1984)                                                 |         111 |
+| Close Shave, A (1995)                                                             |         112 |
+| As Good As It Gets (1997)                                                         |         112 |
+| Welcome to the Dollhouse (1995)                                                   |         112 |
+| One Fine Day (1996)                                                               |         112 |
+| Edge, The (1997)                                                                  |         113 |
+| Batman Forever (1995)                                                             |         114 |
+| Pink Floyd - The Wall (1982)                                                      |         114 |
+| Rosewood (1997)                                                                   |         114 |
+| Frighteners, The (1996)                                                           |         115 |
+| What's Eating Gilbert Grape (1993)                                                |         115 |
+| Beautiful Girls (1996)                                                            |         115 |
+| Arsenic and Old Lace (1944)                                                       |         115 |
+| Raging Bull (1980)                                                                |         116 |
+| Star Trek: Generations (1994)                                                     |         116 |
+| Army of Darkness (1993)                                                           |         116 |
+| Being There (1979)                                                                |         116 |
+| Kolya (1996)                                                                      |         117 |
+| Hoop Dreams (1994)                                                                |         117 |
+| Star Trek: The Motion Picture (1979)                                              |         117 |
+| Wrong Trousers, The (1993)                                                        |         118 |
+| Real Genius (1985)                                                                |         119 |
+| Crying Game, The (1992)                                                           |         119 |
+| Michael (1996)                                                                    |         119 |
+| Bram Stoker's Dracula (1992)                                                      |         120 |
+| Net, The (1995)                                                                   |         120 |
+| Deer Hunter, The (1978)                                                           |         120 |
+| Magnificent Seven, The (1954)                                                     |         121 |
+| Killing Fields, The (1984)                                                        |         121 |
+| Carrie (1976)                                                                     |         121 |
+| My Left Foot (1989)                                                               |         121 |
+| Cinema Paradiso (1988)                                                            |         121 |
+| Harold and Maude (1971)                                                           |         121 |
+| Bonnie and Clyde (1967)                                                           |         122 |
+| Dumbo (1941)                                                                      |         123 |
+| Ben-Hur (1959)                                                                    |         124 |
+| Amistad (1997)                                                                    |         124 |
+| Great Escape, The (1963)                                                          |         124 |
+| Henry V (1989)                                                                    |         124 |
+| Alien: Resurrection (1997)                                                        |         124 |
+| Under Siege (1992)                                                                |         124 |
+| My Fair Lady (1964)                                                               |         125 |
+| Lost Highway (1997)                                                               |         125 |
+| 12 Angry Men (1957)                                                               |         125 |
+| Cold Comfort Farm (1995)                                                          |         125 |
+| James and the Giant Peach (1996)                                                  |         126 |
+| Jackie Brown (1997)                                                               |         126 |
+| Event Horizon (1997)                                                              |         127 |
+| Hunchback of Notre Dame, The (1996)                                               |         127 |
+| Stargate (1994)                                                                   |         127 |
+| Platoon (1986)                                                                    |         127 |
+| Absolute Power (1997)                                                             |         127 |
+| Nikita (La Femme Nikita) (1990)                                                   |         127 |
+| Last of the Mohicans, The (1992)                                                  |         128 |
+| Maverick (1994)                                                                   |         128 |
+| Father of the Bride Part II (1995)                                                |         128 |
+| Natural Born Killers (1994)                                                       |         128 |
+| Ghost and the Darkness, The (1996)                                                |         128 |
+| Some Like It Hot (1959)                                                           |         128 |
+| Crash (1996)                                                                      |         128 |
+| Cinderella (1950)                                                                 |         129 |
+| Bound (1996)                                                                      |         129 |
+| Mask, The (1994)                                                                  |         129 |
+| Shine (1996)                                                                      |         129 |
+| Mystery Science Theater 3000: The Movie (1996)                                    |         130 |
+| Austin Powers: International Man of Mystery (1997)                                |         130 |
+| GoldenEye (1995)                                                                  |         131 |
+| Manchurian Candidate, The (1962)                                                  |         131 |
+| Jungle2Jungle (1997)                                                              |         132 |
+| Ed Wood (1994)                                                                    |         133 |
+| Crow, The (1994)                                                                  |         134 |
+| Multiplicity (1996)                                                               |         134 |
+| Room with a View, A (1986)                                                        |         134 |
+| Sling Blade (1996)                                                                |         136 |
+| Gattaca (1997)                                                                    |         136 |
+| Patton (1970)                                                                     |         136 |
+| Peacemaker, The (1997)                                                            |         136 |
+| Good, The Bad and The Ugly, The (1966)                                            |         137 |
+| Wag the Dog (1997)                                                                |         137 |
+| Con Air (1997)                                                                    |         137 |
+| Home Alone (1990)                                                                 |         137 |
+| Philadelphia (1993)                                                               |         137 |
+| Interview with the Vampire (1994)                                                 |         137 |
+| Singin' in the Rain (1952)                                                        |         137 |
+| Maltese Falcon, The (1941)                                                        |         138 |
+| Searching for Bobby Fischer (1993)                                                |         138 |
+| Batman Returns (1992)                                                             |         142 |
+| Kiss the Girls (1997)                                                             |         143 |
+| Spawn (1997)                                                                      |         143 |
+| Nightmare Before Christmas, The (1993)                                            |         143 |
+| Rainmaker, The (1997)                                                             |         145 |
+| Jackie Chan's First Strike (1996)                                                 |         145 |
+| River Wild, The (1994)                                                            |         146 |
+| Chinatown (1974)                                                                  |         147 |
+| Donnie Brasco (1997)                                                              |         147 |
+| Reservoir Dogs (1992)                                                             |         148 |
+| Clerks (1994)                                                                     |         148 |
+| Grumpier Old Men (1995)                                                           |         148 |
+| Like Water For Chocolate (Como agua para chocolate) (1992)                        |         148 |
+| Professional, The (1994)                                                          |         149 |
+| Happy Gilmore (1996)                                                              |         149 |
+| Sneakers (1992)                                                                   |         150 |
+| Remains of the Day, The (1993)                                                    |         150 |
+| Die Hard: With a Vengeance (1995)                                                 |         151 |
+| Abyss, The (1989)                                                                 |         151 |
+| Firm, The (1993)                                                                  |         151 |
+| African Queen, The (1951)                                                         |         152 |
+| Fried Green Tomatoes (1991)                                                       |         153 |
+| Highlander (1986)                                                                 |         153 |
+| Crimson Tide (1995)                                                               |         154 |
+| Seven Years in Tibet (1997)                                                       |         155 |
+| Beavis and Butt-head Do America (1996)                                            |         156 |
+| Right Stuff, The (1983)                                                           |         157 |
+| Executive Decision (1996)                                                         |         157 |
+| Swingers (1996)                                                                   |         157 |
+| Dragonheart (1996)                                                                |         158 |
+| Lost World: Jurassic Park, The (1997)                                             |         158 |
+| Apt Pupil (1998)                                                                  |         160 |
+| Grosse Pointe Blank (1997)                                                        |         160 |
+| First Wives Club, The (1996)                                                      |         160 |
+| Star Trek VI: The Undiscovered Country (1991)                                     |         161 |
+| While You Were Sleeping (1995)                                                    |         162 |
+| George of the Jungle (1997)                                                       |         162 |
+| Secrets & Lies (1996)                                                             |         162 |
+| Birds, The (1963)                                                                 |         162 |
+| Kingpin (1996)                                                                    |         162 |
+| Nutty Professor, The (1996)                                                       |         163 |
+| Pretty Woman (1990)                                                               |         164 |
+| American President, The (1995)                                                    |         164 |
+| Cool Hand Luke (1967)                                                             |         164 |
+| Bridge on the River Kwai, The (1957)                                              |         165 |
+| Die Hard 2 (1990)                                                                 |         166 |
+| Piano, The (1993)                                                                 |         168 |
+| Everyone Says I Love You (1996)                                                   |         168 |
+| Sleepers (1996)                                                                   |         169 |
+| In the Line of Fire (1993)                                                        |         169 |
+| Mother (1996)                                                                     |         169 |
+| Clueless (1995)                                                                   |         170 |
+| Ghost (1990)                                                                      |         170 |
+| Grease (1978)                                                                     |         170 |
+| Full Metal Jacket (1987)                                                          |         170 |
+| Cape Fear (1991)                                                                  |         171 |
+| Big Night (1996)                                                                  |         171 |
+| Heathers (1989)                                                                   |         171 |
+| Glory (1989)                                                                      |         171 |
+| Gone with the Wind (1939)                                                         |         171 |
+| Star Trek III: The Search for Spock (1984)                                        |         171 |
+| My Best Friend's Wedding (1997)                                                   |         172 |
+| Snow White and the Seven Dwarfs (1937)                                            |         172 |
+| Lawrence of Arabia (1962)                                                         |         173 |
+| Fantasia (1940)                                                                   |         174 |
+| Monty Python's Life of Brian (1979)                                               |         174 |
+| Rumble in the Bronx (1995)                                                        |         174 |
+| G.I. Jane (1997)                                                                  |         175 |
+| Quiz Show (1994)                                                                  |         175 |
+| Cop Land (1997)                                                                   |         175 |
+| Much Ado About Nothing (1993)                                                     |         176 |
+| That Thing You Do! (1996)                                                         |         176 |
+| Emma (1996)                                                                       |         177 |
+| Mary Poppins (1964)                                                               |         178 |
+| Primal Fear (1996)                                                                |         178 |
+| North by Northwest (1959)                                                         |         179 |
+| Clear and Present Danger (1994)                                                   |         179 |
+| Vertigo (1958)                                                                    |         179 |
+| Tomorrow Never Dies (1997)                                                        |         180 |
+| Fly Away Home (1996)                                                              |         180 |
+| Annie Hall (1977)                                                                 |         180 |
+| Dave (1993)                                                                       |         180 |
+| Taxi Driver (1976)                                                                |         182 |
+| Unforgiven (1992)                                                                 |         182 |
+| Postino, Il (1994)                                                                |         183 |
+| Mighty Aphrodite (1995)                                                           |         184 |
+| Ulee's Gold (1997)                                                                |         184 |
+| Long Kiss Goodnight, The (1996)                                                   |         185 |
+| Lone Star (1996)                                                                  |         187 |
+| Devil's Advocate, The (1997)                                                      |         188 |
+| Boogie Nights (1997)                                                              |         189 |
+| Sabrina (1995)                                                                    |         190 |
+| This Is Spinal Tap (1984)                                                         |         191 |
+| Mrs. Doubtfire (1993)                                                             |         192 |
+| Tin Cup (1996)                                                                    |         193 |
+| Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb (1963)       |         194 |
+| Face/Off (1997)                                                                   |         194 |
+| Gandhi (1982)                                                                     |         195 |
+| Fifth Element, The (1997)                                                         |         197 |
+| Good Will Hunting (1997)                                                          |         198 |
+| Citizen Kane (1941)                                                               |         198 |
+| Star Trek IV: The Voyage Home (1986)                                              |         199 |
+| Young Frankenstein (1974)                                                         |         200 |
+| Batman (1989)                                                                     |         201 |
+| Boot, Das (1981)                                                                  |         201 |
+| Beauty and the Beast (1991)                                                       |         202 |
+| Shining, The (1980)                                                               |         206 |
+| Eraser (1996)                                                                     |         206 |
+| M*A*S*H (1970)                                                                    |         206 |
+| Brazil (1985)                                                                     |         208 |
+| True Lies (1994)                                                                  |         208 |
+| Get Shorty (1995)                                                                 |         209 |
+| Rear Window (1954)                                                                |         209 |
+| Godfather: Part II, The (1974)                                                    |         209 |
+| Starship Troopers (1997)                                                          |         211 |
+| Field of Dreams (1989)                                                            |         212 |
+| Sleepless in Seattle (1993)                                                       |         213 |
+| People vs. Larry Flynt, The (1996)                                                |         215 |
+| Butch Cassidy and the Sundance Kid (1969)                                         |         216 |
+| Mars Attacks! (1996)                                                              |         217 |
+| Murder at 1600 (1997)                                                             |         218 |
+| Volcano (1997)                                                                    |         219 |
+| To Kill a Mockingbird (1962)                                                      |         219 |
+| Babe (1995)                                                                       |         219 |
+| Aladdin (1992)                                                                    |         219 |
+| Lion King, The (1994)                                                             |         220 |
+| Top Gun (1986)                                                                    |         220 |
+| Apocalypse Now (1979)                                                             |         221 |
+| Clockwork Orange, A (1971)                                                        |         221 |
+| Courage Under Fire (1996)                                                         |         221 |
+| Sound of Music, The (1965)                                                        |         222 |
+| Heat (1995)                                                                       |         223 |
+| GoodFellas (1990)                                                                 |         226 |
+| Stand by Me (1986)                                                                |         227 |
+| Hunt for Red October, The (1990)                                                  |         227 |
+| In & Out (1997)                                                                   |         230 |
+| Speed (1994)                                                                      |         230 |
+| It's a Wonderful Life (1946)                                                      |         231 |
+| Time to Kill, A (1996)                                                            |         232 |
+| Seven (Se7en) (1995)                                                              |         236 |
+| Graduate, The (1967)                                                              |         239 |
+| Psycho (1960)                                                                     |         239 |
+| Dante's Peak (1997)                                                               |         240 |
+| Devil's Own, The (1997)                                                           |         240 |
+| Sting, The (1973)                                                                 |         241 |
+| Die Hard (1988)                                                                   |         243 |
+| Casablanca (1942)                                                                 |         243 |
+| Star Trek: The Wrath of Khan (1982)                                               |         244 |
+| Phenomenon (1996)                                                                 |         244 |
+| Wizard of Oz, The (1939)                                                          |         246 |
+| Fish Called Wanda, A (1988)                                                       |         247 |
+| Trainspotting (1996)                                                              |         250 |
+| Blues Brothers, The (1980)                                                        |         251 |
+| Dead Poets Society (1989)                                                         |         251 |
+| Four Weddings and a Funeral (1994)                                                |         251 |
+| Game, The (1997)                                                                  |         251 |
+| Broken Arrow (1996)                                                               |         254 |
+| Dances with Wolves (1990)                                                         |         256 |
+| Raising Arizona (1987)                                                            |         256 |
+| 2001: A Space Odyssey (1968)                                                      |         259 |
+| Evita (1996)                                                                      |         259 |
+| Jurassic Park (1993)                                                              |         261 |
+| One Flew Over the Cuckoo's Nest (1975)                                            |         264 |
+| Usual Suspects, The (1995)                                                        |         267 |
+| Ransom (1996)                                                                     |         267 |
+| Sense and Sensibility (1995)                                                      |         268 |
+| Truth About Cats & Dogs, The (1996)                                               |         272 |
+| Blade Runner (1982)                                                               |         275 |
+| Apollo 13 (1995)                                                                  |         276 |
+| Amadeus (1984)                                                                    |         276 |
+| Groundhog Day (1993)                                                              |         280 |
+| Jaws (1975)                                                                       |         280 |
+| Shawshank Redemption, The (1994)                                                  |         283 |
+| Aliens (1986)                                                                     |         284 |
+| When Harry Met Sally... (1989)                                                    |         290 |
+| Alien (1979)                                                                      |         291 |
+| Mr. Holland's Opus (1995)                                                         |         293 |
+| Birdcage, The (1996)                                                              |         293 |
+| Twister (1996)                                                                    |         293 |
+| Conspiracy Theory (1997)                                                          |         295 |
+| Terminator 2: Judgment Day (1991)                                                 |         295 |
+| L.A. Confidential (1997)                                                          |         297 |
+| Braveheart (1995)                                                                 |         297 |
+| Schindler's List (1993)                                                           |         298 |
+| Leaving Las Vegas (1995)                                                          |         298 |
+| Dead Man Walking (1995)                                                           |         299 |
+| E.T. the Extra-Terrestrial (1982)                                                 |         300 |
+| Terminator, The (1984)                                                            |         301 |
+| Men in Black (1997)                                                               |         303 |
+| Full Monty, The (1997)                                                            |         315 |
+| Monty Python and the Holy Grail (1974)                                            |         316 |
+| Saint, The (1997)                                                                 |         316 |
+| Forrest Gump (1994)                                                               |         321 |
+| Princess Bride, The (1987)                                                        |         324 |
+| Willy Wonka and the Chocolate Factory (1971)                                      |         326 |
+| Indiana Jones and the Last Crusade (1989)                                         |         331 |
+| Fugitive, The (1993)                                                              |         336 |
+| Mission: Impossible (1996)                                                        |         344 |
+| Titanic (1997)                                                                    |         350 |
+| Back to the Future (1985)                                                         |         350 |
+| Star Trek: First Contact (1996)                                                   |         365 |
+| Empire Strikes Back, The (1980)                                                   |         367 |
+| Rock, The (1996)                                                                  |         378 |
+| Chasing Amy (1997)                                                                |         379 |
+| Jerry Maguire (1996)                                                              |         384 |
+| Silence of the Lambs, The (1991)                                                  |         390 |
+| Twelve Monkeys (1995)                                                             |         392 |
+| Pulp Fiction (1994)                                                               |         394 |
+| Godfather, The (1972)                                                             |         413 |
+| Raiders of the Lost Ark (1981)                                                    |         420 |
+| Independence Day (ID4) (1996)                                                     |         429 |
+| Air Force One (1997)                                                              |         431 |
+| Toy Story (1995)                                                                  |         452 |
+| Scream (1996)                                                                     |         478 |
+| English Patient, The (1996)                                                       |         481 |
+| Liar Liar (1997)                                                                  |         485 |
+| Return of the Jedi (1983)                                                         |         507 |
+| Fargo (1996)                                                                      |         508 |
+| Contact (1997)                                                                    |         509 |
+| Star Wars (1977)                                                                  |         583 |
++-----------------------------------------------------------------------------------+-------------+
+1664 rows in set (0.14 sec)
+
+mysql> 
