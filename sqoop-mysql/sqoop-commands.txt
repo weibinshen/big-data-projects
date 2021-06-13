@@ -1,0 +1,15 @@
+
+Import data from MySQL to HDFS
+
+sqoop import --connect jdbc:mysql://localhost/movielens --driver com.mysql.jdbc.Driver --table movies -m 1
+
+Import data from MySQL directly into Hive:
+
+sqoop import --connect jdbc:mysql://localhost/movielens --driver com.mysql.jdbc.Driver --table movies -m 1 --hive-import
+
+Export data from Hive MySQL:
+
+// Need to first create the table in MySQL before we can import data to it:
+// mysql> create table exported_movies (id INTEGER, title VARCHAR(255), releaseDate DATE);
+
+sqoop export --connect jdbc:mysql://localhost/movielens -m 1 --driver com.mysql.jdbc.Driver --table exported_movies --export-dir /apps/hive/warehouse/movies --input-fields-terminated-by '\0001' 
