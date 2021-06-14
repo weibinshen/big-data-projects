@@ -1,0 +1,13 @@
+
+[root@sandbox-hdp yum.repos.d]# service cassandra start
+[root@sandbox-hdp yum.repos.d]# cqlsh --cqlversion="3.4.0"
+
+// Since I'm just running Cassandra on HDP on a single node, we will use SimpleStrategy and replication_factor=1.
+
+cqlsh> CREATE KEYSPACE movielens WITH replication = {'class': 'SimpleStrategy', 'replication_factor':'1'} AND durable_writes = true;
+cqlsh> Use movielens;
+
+// Primary key needs to be provided for Cassandra to properly partition the data.
+cqlsh:movielens> CREATE TABLE users (user_id int, age int, gender text, occupation text, zip text, PRIMARY KEY (user_id));
+
+[root@sandbox-hdp maria_dev]# service cassandra stop
