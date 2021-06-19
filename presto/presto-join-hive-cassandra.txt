@@ -1,0 +1,42 @@
+// To launch Cassandra with thrift enabled:
+service cassandra start
+nodetool enablethrift
+
+// To go into Cassandra CLI
+cqlsh --cqlversion="3.4.0"
+
+// To launch Presto and then start CLI:
+bin/launcher start
+bin/presto --server 127.0.0.1:8090 --catalog hive,cassandra
+
+presto> SELECT u.occupation, COUNT(*) AS occuCount FROM hive.default.ratings r JOIN cassandra.movielens.users u ON r.userid = u.user_id GROUP BY u.occupation ORDER BY occuCount DESC;
+
+
+  occupation   | occuCount 
+---------------+-----------
+ student       |     21957 
+ other         |     10663 
+ educator      |      9442 
+ engineer      |      8175 
+ programmer    |      7801 
+ administrator |      7479 
+ writer        |      5536 
+ librarian     |      5273 
+ technician    |      3506 
+ executive     |      3403 
+ healthcare    |      2804 
+ artist        |      2308 
+ entertainment |      2095 
+ scientist     |      2058 
+ marketing     |      1950 
+ retired       |      1609 
+ lawyer        |      1345 
+ none          |       901 
+ salesman      |       856 
+ doctor        |       540 
+ homemaker     |       299 
+(21 rows)
+
+// To clean up and stop Presto and Cassandra:
+bin/launcher stop
+service cassandra stop
