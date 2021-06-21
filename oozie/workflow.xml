@@ -1,0 +1,71 @@
+<!-- 
+To run the work flow, we need to first upload this workflow file into hadoop, using command like
+hadoop fs -put workflow.xml /user/maria_dev 
+
+For this particular workflow, the hive script also needs to be at the expected directory:
+hadoop fs -put oldmovies.sql /user/maria_dev 
+
+Also for this particular workflow, we need a mySQL-sqoop connector that Oozie can see, so we need to run this command AND restart Oozie.
+hadoop fs -put /usr/share/java/mysql-connector-java.jar /user/oozie/share/lib/lib_20180618160835/sqoop 
+
+To run this workflow:
+oozie job -oozie http://localhost:11000/oozie -config /home/maria_dev/job.properties -run
+Then we may monitor the status of the job through http://127.0.0.1:11000/oozie/
+-->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow-app xmlns="uri:oozie:workflow:0.2" name="old-movies">
+    <start to="sqoop-node"/>
+ 
+    <action name="sqoop-node">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <prepare>
+            <!-- This command (to delete any existing artifacts) in the prepare block will be ran before actually running the sqoop job -->
+                <delete path="${nameNode}/user/maria_dev/movies"/>
+            </prepare>
+ 
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <!-- This is the actual command ran by sqoop: extract the movies table with just a single mapper. 
+            Because this command section is defined within sqoop section, the command omits "sqoop" to start with -->
+            <command>import --connect jdbc:mysql://localhost/movielens --driver com.mysql.jdbc.Driver --table movies -m 1</command>
+        </sqoop>
+        <ok to="hive-node"/>
+        <error to="fail"/>
+    </action>
+  
+    <action name="hive-node">
+        <hive xmlns="uri:oozie:hive-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <prepare>
+                <delete path="${nameNode}/user/maria_dev/oldmovies"/>
+            </prepare>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <!-- Specifies the hive script to run, as well as parameter values here -->
+            <script>oldmovies.sql</script>
+            <param>OUTPUT=/user/maria_dev/oldmovies</param>
+        </hive>
+        <ok to="end"/>
+        <error to="fail"/>
+    </action>
+ 
+    <!-- A kill-type node will stop the workflow -->
+    <kill name="fail">
+        <message>Sqoop failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+
+    <!-- An end-type node ends the workflow without errors  -->
+    <end name="end"/>
+</workflow-app>
